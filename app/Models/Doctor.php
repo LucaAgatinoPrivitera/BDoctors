@@ -18,4 +18,18 @@ class Doctor extends Model
         'phone',
         'bio'
     ];
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class, 'doctor_specialization');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 }
