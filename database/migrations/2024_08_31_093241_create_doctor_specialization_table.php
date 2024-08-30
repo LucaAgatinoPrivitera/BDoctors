@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('doctor_specialization', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('doctor_id');
-            $table->foreign('doctor_id')->references('id')->on('doctor');
             $table->unsignedBigInteger('specialization_id');
-            $table->foreign('specialization_id')->references('id')->on('specializations');
+
+            // Definizione delle chiavi esterne
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('specialization_id')->references('id')->on('specializations')->onDelete('cascade');
+
+            // Chiave primaria composta
+            $table->primary(['doctor_id', 'specialization_id']);
         });
 
         Schema::enableForeignKeyConstraints();

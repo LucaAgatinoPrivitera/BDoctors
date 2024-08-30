@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            // Cambia 'bigInteger' a 'unsignedBigInteger' per corrispondere a 'doctor.id'
             $table->unsignedBigInteger('doctor_id');
             $table->foreign('doctor_id')
                   ->references('id')
-                  ->on('doctor')
-                  ->onDelete('cascade'); // Opzionale, elimina le recensioni se il dottore viene eliminato
+                  ->on('doctors') // Usa 'doctors' qui
+                  ->onDelete('cascade');
             $table->smallInteger('stars');
             $table->string('review_text')->nullable();
             $table->string('name_reviewer')->nullable();
             $table->string('email_reviewer')->nullable();
-            $table->timestamps(); // Aggiunta opzionale per created_at e updated_at
+            $table->timestamps();
         });
     }
 

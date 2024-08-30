@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('doctor', function (Blueprint $table) {
-            $table->id(); // Crea una colonna 'id' come chiave primaria
+        Schema::create('doctors', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('users_id'); // Crea una colonna per la chiave esterna
             $table->foreign('users_id')->references('id')->on('userss')->onDelete('cascade'); // Definisci il vincolo della chiave esterna
             $table->string('surname');
