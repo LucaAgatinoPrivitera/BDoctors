@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -32,30 +34,29 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        //PRENDO TUTTI I DATI
-        // $data = $request->all();
-
-        // Qui abbiamo la validazione
         $data = $request->validate([
-            // "id" => "required",
             "surname" => "required|min:1|max:255",
             "address" => "required|min:1|max:255",
             "phone" => "required|min:1|max:20",
             'bio' => 'nullable|string|max:500',
         ]);
 
+        // Ottieni l'ID dell'utente autenticato
+        $userId = Auth::id();
+        // Ottieni l'utente autenticato
+        $user = User::find($userId);
 
-        //CREO L'OGGETTO
+        // Aggiungi i dati all'array, incluso il nome dell'utente
+        $data['users_id'] = $userId;
+        // $data['user_name'] = $user->name;
+
         $newDoctor = new Doctor();
-
-        //POPOLO L'OGGETTO CREANDO L'ISTANZA
         $newDoctor->fill($data);
-
-        //SALVO SUL DB
         $newDoctor->save();
 
-        //RITORNO LA ROTTA
-        // return redirect()->route('project.index');
+        // Debug per verificare se user_id è stato impostato
+        dd($newDoctor, $user);
+
         return redirect()->route('admin.doctors.show', $newDoctor);
     }
 
@@ -67,7 +68,8 @@ class DoctorController extends Controller
         $data = [
             "doctor" => $doctor
         ];
-    
+
+        // dd($data);
         return view("admin.doctors.show", $data);
     }
 

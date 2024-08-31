@@ -16,7 +16,9 @@ class Doctor extends Model
         'cv',
         'pic',
         'phone',
-        'bio'
+        'bio',
+        'user_id',
+        'user_name'
     ];
     public function reviews()
     {
@@ -30,8 +32,9 @@ class Doctor extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'users_id');
     }
     
+    // per togliere i timestamps
     public $timestamps = false;
 }

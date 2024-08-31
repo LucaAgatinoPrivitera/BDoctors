@@ -27,6 +27,7 @@
                      <tr>
                          <!-- Nome utente -->
                          <td>{{ $doctor->user ? $doctor->user->name : 'Utente non disponibile' }}</td>
+                         {{-- <p>Nome: {{ $doctor->user ? $doctor->user->name : 'Utente non associato' }}</p> --}}
                          <!-- Cognome -->
                          <td>{{ $doctor->surname }}</td>
                          <!-- Indirizzo -->
