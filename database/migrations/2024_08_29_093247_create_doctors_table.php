@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('doctors', function (Blueprint $table) {
+<<<<<<< HEAD
             $table->id();
             $table->unsignedBigInteger('users_id'); // Crea una colonna per la chiave esterna
             $table->foreign('users_id')->references('id')->on('userss')->onDelete('cascade'); // Definisci il vincolo della chiave esterna
+=======
+            $table->id(); // Crea una colonna 'id' come chiave primaria
+            $table->unsignedBigInteger('user_id'); // Crea una colonna per la chiave esterna
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Definisci il vincolo della chiave esterna
+>>>>>>> Doctor-index
             $table->string('surname');
             $table->string('address');
             $table->string('cv');
@@ -33,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctor');
+        Schema::dropIfExists('doctors');
     }
 };

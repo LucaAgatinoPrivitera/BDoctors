@@ -15,6 +15,10 @@ return new class extends Migration
 
         Schema::create('doctor_specialization', function (Blueprint $table) {
             $table->unsignedBigInteger('doctor_id');
+<<<<<<< HEAD
+=======
+            $table->foreign('doctor_id')->references('id')->on('doctors');
+>>>>>>> Doctor-index
             $table->unsignedBigInteger('specialization_id');
 
             // Definizione delle chiavi esterne

@@ -12,7 +12,11 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+         // Recupera tutti i medici dal database
+         $doctors = Doctor::with('user')->get();
+
+         // Passa i dati alla vista
+         return view('admin.doctors.index', compact('doctors'));
     }
 
     /**
