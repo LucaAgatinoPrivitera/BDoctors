@@ -36,6 +36,11 @@
 			@enderror
 		</div>
 
+		<div class="form-group">
+			<label for="pic">Immagine</label>
+			<input type="file" name="pic" class="form-control">
+		</div>
+
 		<!-- Aggiungi qui altri campi del form se necessario -->
 		<button class="bg-primary text-primary my-2 py-1" type="submit">Aggiungi dottore</button>
 	</form>

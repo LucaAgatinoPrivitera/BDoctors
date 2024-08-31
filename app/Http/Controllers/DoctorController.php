@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -39,6 +40,7 @@ class DoctorController extends Controller
             "address" => "required|min:1|max:255",
             "phone" => "required|min:1|max:20",
             'bio' => 'nullable|string|max:500',
+            'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Ottieni l'ID dell'utente autenticato
@@ -50,12 +52,19 @@ class DoctorController extends Controller
         $data['users_id'] = $userId;
         // $data['user_name'] = $user->name;
 
+        // Gestisci l'upload dell'immagine
+        if ($request->hasFile('pic')) {
+            $file = $request->file('pic');
+            $filename = $file->store('public/images'); // Salva il file nella cartella public/images
+            $data['pic'] = basename($filename); // Salva solo il nome del file
+        }
+
         $newDoctor = new Doctor();
         $newDoctor->fill($data);
         $newDoctor->save();
 
         // Debug per verificare se user_id è stato impostato
-        dd($newDoctor, $user);
+        // dd($newDoctor, $user);
 
         return redirect()->route('admin.doctors.show', $newDoctor);
     }
@@ -101,10 +110,28 @@ class DoctorController extends Controller
         // $project->fill($data);
         // $project->save();
 
+        // Gestisci l'upload dell'immagine
+        if ($request->hasFile('pic')) {
+            // Elimina l'immagine precedente se esiste
+            if ($doctor->pic && Storage::disk('public')->exists('images/' . $doctor->pic)) {
+                Storage::disk('public')->delete('images/' . $doctor->pic);
+            }
 
-        //Se ricordo bene la parte sopra è la parte allungata, mentre sotto quella abbreviata
+            $file = $request->file('pic');
+            $filename = $file->store('images', 'public');
+            $data['pic'] = basename($filename); // Salva solo il nome del file
+        } else {
+            // Mantieni il nome del file esistente se nessuna nuova immagine è stata fornita
+            $data['pic'] = $doctor->pic;
+        }
+
+        
+
+        // Rimuovi `user_id` dai dati di aggiornamento, se non è necessario modificarlo
+        unset($data['user_id']);
+
+        // Aggiorna il dottore con i dati validati
         $doctor->update($data);
-
 
         return redirect()->route('doctors.show', $doctor->id);
     }
