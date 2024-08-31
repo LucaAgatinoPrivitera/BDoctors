@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('doctor_id');
             $table->foreign('doctor_id')
                   ->references('id')
-                  ->on('doctors') // Usa 'doctors' qui
-                  ->onDelete('cascade');
+                  ->on('doctors')
+                  ->onDelete('cascade'); // Opzionale, elimina le recensioni se il dottore viene eliminato
             $table->smallInteger('stars');
             $table->string('review_text')->nullable();
             $table->string('name_reviewer')->nullable();
