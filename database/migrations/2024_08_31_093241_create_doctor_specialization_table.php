@@ -15,16 +15,11 @@ return new class extends Migration
 
         Schema::create('doctor_specialization', function (Blueprint $table) {
             $table->unsignedBigInteger('doctor_id');
-<<<<<<< HEAD
-=======
             $table->foreign('doctor_id')->references('id')->on('doctors');
->>>>>>> Doctor-index
             $table->unsignedBigInteger('specialization_id');
-
             // Definizione delle chiavi esterne
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->foreign('specialization_id')->references('id')->on('specializations')->onDelete('cascade');
-
             // Chiave primaria composta
             $table->primary(['doctor_id', 'specialization_id']);
         });
