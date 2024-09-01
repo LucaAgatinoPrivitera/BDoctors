@@ -42,7 +42,7 @@
 		</div>
 
 		<!-- Aggiungi qui altri campi del form se necessario -->
-		<button class="bg-primary text-primary my-2 py-1" type="submit">Aggiungi dottore</button>
+		<button class="bg-primary my-2 py-1" type="submit">Aggiungi dottore</button>
 	</form>
 	<a href="{{ route('doctors.index') }}">Torna alla lista dei tipi</a>
 @endsection
