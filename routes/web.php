@@ -12,7 +12,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::resource('doctors', DoctorController::class);
     
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
