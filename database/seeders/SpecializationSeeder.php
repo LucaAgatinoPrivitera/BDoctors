@@ -13,7 +13,7 @@ class SpecializationSeeder extends Seeder
      */
     public function run(): void
     {
-        $specializations = [
+        DB::table('specializations')->insert([
             ['name' => 'Cardiologia'],
             ['name' => 'Dermatologia'],
             ['name' => 'Neurologia'],
@@ -24,8 +24,6 @@ class SpecializationSeeder extends Seeder
             ['name' => 'Ortopedia'],
             ['name' => 'Urologia'],
             ['name' => 'Ginecologia'],
-        ];
-
-        DB::table('specializations')->insert($specializations);
+        ]);
     }
 }
