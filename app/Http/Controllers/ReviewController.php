@@ -12,7 +12,9 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::with('doctor')->get();
+
+        return view('reviews.index' , compact('reviews'));
     }
 
     /**

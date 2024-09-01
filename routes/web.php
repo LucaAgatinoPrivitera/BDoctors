@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,6 +15,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('doctors', DoctorController::class);
+    Route::resource('reviews', ReviewController::class);
     
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
     // Route::resource('admin/doctors', DoctorController::class);
