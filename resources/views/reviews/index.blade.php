@@ -18,7 +18,11 @@
             @foreach ($reviews as $review)
                 <tr>
                     <td>{{ $review->doctor->user->name }}</td>
-                    <td>{{ $review->stars }}</td>
+                    <td>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa{{ $i <= $review->stars ? 's' : 'r' }} fa-star text-warning"></i>
+                        @endfor
+                    </td>
                     <td>{{ $review->review_text }}</td>
                     <td>{{ $review->name_reviewer }}</td>
                     <td>{{ $review->email_reviewer }}</td>
