@@ -19,7 +19,7 @@ class DoctorController extends Controller
         $doctors = Doctor::with('user')->get();
 
         // Passa i dati alla vista
-        return view('admin.doctors.index', compact('doctors'));
+        return view('doctors.index', compact('doctors'));
     }
 
     /**
@@ -27,7 +27,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctors.create');
+        return view('doctors.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class DoctorController extends Controller
         // Debug per verificare se user_id è stato impostato
         // dd($newDoctor, $user);
 
-        return redirect()->route('admin.doctors.show', $newDoctor);
+        return redirect()->route('doctors.show', $newDoctor);
     }
 
     /**
@@ -79,7 +79,7 @@ class DoctorController extends Controller
         ];
 
         // dd($data);
-        return view("admin.doctors.show", $data);
+        return view("doctors.show", $data);
     }
 
     /**
@@ -91,7 +91,7 @@ class DoctorController extends Controller
             "doctor" => $doctor
         ];
 
-        return view("admin.doctors.edit", $data);
+        return view("doctors.edit", $data);
     }
 
     /**
