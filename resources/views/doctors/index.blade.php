@@ -10,6 +10,7 @@
 </head>
 {{-- Da aggiungere utilizzando i yield content e il layout navigation --}}
 {{-- @extends('layouts.navigation') --}}
+
 <body style="background-color: #e6f4ea;">
 	<div class="container mt-5">
 		<h1 class="text-center mb-4">Lista dei Medici</h1>
@@ -30,7 +31,9 @@
 				@foreach ($doctors as $doctor)
 					<tr>
 						<!-- Nome utente -->
-						<td class="align-middle">{{ $doctor->user ? $doctor->user->name : 'Utente non disponibile' }}</td>
+						<td class="align-middle">
+							{{ $doctor->user ? $doctor->user->name : 'Utente non disponibile' }}
+						</td>
 						{{-- <p>Nome: {{ $doctor->user ? $doctor->user->name : 'Utente non associato' }}</p> --}}
 						<!-- Cognome -->
 						<td class="align-middle">{{ $doctor->surname }}</td>
@@ -43,8 +46,7 @@
 						<!-- Foto con segnaposto -->
 						<td class="text-center">
 							<img src="{{ $doctor->pic ? asset('storage/images/' . $doctor->pic) : 'https://via.placeholder.com/100' }}"
-								alt="Foto di {{ $doctor->user ? $doctor->user->name : 'Medico' }}" class="img-thumbnail"
-								style="height: 100px;">
+								alt="Foto di {{ $doctor->user ? $doctor->user->name : 'Medico' }}" class="img-thumbnail" style="height: 100px;">
 						</td>
 						<!-- Link al CV -->
 						<td class="text-center align-middle">
