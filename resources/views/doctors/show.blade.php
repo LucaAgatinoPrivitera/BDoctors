@@ -14,6 +14,12 @@
 		<h4>Indirizzo: {{ $doctor['address'] }}</h4>
 		<h2>Telefono: {{ $doctor['phone'] }}</h2>
 		<h2>Bio: {{ $doctor['bio'] }}</h2>
+		<h3>Specializzazioni</h3>
+		<ul>
+			@foreach ($doctor->specializations as $specialization)
+				<li>{{ $specialization->name }}</li>
+			@endforeach
+		</ul>
 
 	</div>
 	<a class="btn btn-success my-4" href="{{ route('doctors.index') }}">Torna alla lista dei dottori</a>
