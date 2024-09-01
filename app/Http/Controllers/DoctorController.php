@@ -75,11 +75,12 @@ class DoctorController extends Controller
     public function show(Doctor $doctor)
     {
         // Carica la relazione user con il medico
-        $doctor = Doctor::with('user')->findOrFail($doctor->id);
+        $doctor = Doctor::with(['user', 'specializations'])->findOrFail($doctor->id);
 
         $data = [
             "doctor" => $doctor
         ];
+
 
         return view("doctors.show", $data);
     }
