@@ -38,7 +38,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        return view('reviews.show' , compact('review'));
     }
 
     /**
