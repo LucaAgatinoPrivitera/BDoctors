@@ -64,7 +64,7 @@ class ReviewController extends Controller
      */
     public function edit(Review $review)
     {
-        //
+        return view('reviews.edit', compact('review'));
     }
 
     /**
@@ -72,7 +72,16 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        //
+        $validated = $request->validate([
+            'stars' => 'required|integer|min:1|max:5',
+            'review_text' => 'required|string|max:1000',
+            'name_reviewer' => 'required|string|max:255',
+            'email_reviewer' => 'required|email|max:255',
+        ]);
+
+        $review->update($validated);
+
+        return redirect()->route('reviews.show', $review->id)->with('success', 'Recensione aggiornata con successo.');
     }
 
     /**
