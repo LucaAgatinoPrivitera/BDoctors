@@ -2,3 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+.container-show {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.card-title {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.list-group-item {
+    font-size: 16px;
+    border: none;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+}
+
+.review-text {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
