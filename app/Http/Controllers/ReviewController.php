@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -22,7 +23,11 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+         // Recupera tutti i medici per il dropdown nel form
+    $doctors = Doctor::all();
+
+    // Ritorna la vista del form con la lista dei medici
+    return view('reviews.create', compact('doctors'));
     }
 
     /**
@@ -30,7 +35,20 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+          // Valida i dati in arrivo
+    $request->validate([
+        'doctor_id' => 'required|exists:doctors,id',
+        'stars' => 'required|integer|min:1|max:5',
+        'review_text' => 'required|string|max:1000',
+        'name_reviewer' => 'required|string|max:255',
+        'email_reviewer' => 'required|email|max:255',
+    ]);
+
+    // Crea una nuova recensione con i dati validati
+    Review::create($request->all());
+
+    // Reindirizza a una pagina a scelta con un messaggio di successo
+    return redirect()->route('reviews.index')->with('success', 'Recensione creata con successo!');
     }
 
     /**
