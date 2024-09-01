@@ -41,16 +41,14 @@ class DoctorController extends Controller
             "phone" => "required|min:1|max:20",
             'bio' => 'nullable|string|max:500',
             'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cv' => 'nullable|file',
         ]);
 
         // Ottieni l'ID dell'utente autenticato
         $userId = Auth::id();
-        // Ottieni l'utente autenticato
-        $user = User::find($userId);
 
-        // Aggiungi i dati all'array, incluso il nome dell'utente
-        $data['users_id'] = $userId;
-        // $data['user_name'] = $user->name;
+        // Aggiungi l'ID dell'utente all'array dei dati
+        $data['user_id'] = $userId;
 
         // Gestisci l'upload dell'immagine
         if ($request->hasFile('pic')) {
@@ -59,14 +57,11 @@ class DoctorController extends Controller
             $data['pic'] = basename($filename); // Salva solo il nome del file
         }
 
-        $newDoctor = new Doctor();
-        $newDoctor->fill($data);
-        $newDoctor->save();
+        // Crea il nuovo record Doctor
+        Doctor::create($data);
 
-        // Debug per verificare se user_id è stato impostato
-        // dd($newDoctor, $user);
-
-        return redirect()->route('doctors.show', $newDoctor);
+        // Reindirizza alla pagina di dettaglio del dottore
+        return redirect()->route('doctors.show', ['doctor' => $data['user_id']]);
     }
 
     /**

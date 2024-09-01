@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Definisci il vincolo della chiave esterna
             $table->string('surname');
             $table->string('address');
-            $table->string('cv');
-            $table->string('pic');
             $table->string('phone');
-            $table->string('bio');
+            $table->string('bio')->nullable();
+            $table->string('pic')->nullable();
+            $table->string('cv')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();
