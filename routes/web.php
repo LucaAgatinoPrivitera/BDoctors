@@ -18,6 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('doctors', DoctorController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('messages', MessageController::class);
+   
+    
+
 
 
 
