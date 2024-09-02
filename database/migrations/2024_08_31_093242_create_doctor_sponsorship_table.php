@@ -20,9 +20,10 @@ return new class extends Migration
             $table->unsignedBigInteger('sponsorship_id');
             $table->foreign('sponsorship_id')->references('id')->on('sponsorships');
             $table->string('name');
-            $table->string('price');
-            $table->date('date_start');
-            $table->date('date_end');
+            $table->decimal('price', 8, 2); // Cambia il tipo a decimal per il prezzo
+            $table->dateTime('date_start'); // Usa dateTime per le date
+            $table->dateTime('date_end');
+            $table->timestamps(); // Se vuoi usare timestamps
         });
 
         Schema::enableForeignKeyConstraints();

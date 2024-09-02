@@ -20,6 +20,7 @@ class Doctor extends Model
         'user_id',
         'user_name'
     ];
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
@@ -34,7 +35,20 @@ class Doctor extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
+    public function sponsorships()
+    {
+        return $this->belongsToMany(Sponsorship::class, 'doctor_sponsorship')
+            ->withPivot('name', 'price', 'date_start', 'date_end');
+    }
+
+    public function activeSponsorship()
+    {
+        return $this->sponsorships()->where('date_start', '<=', now())
+            ->where('date_end', '>=', now())
+            ->first();
+    }
+
     // per togliere i timestamps
     public $timestamps = false;
 }
