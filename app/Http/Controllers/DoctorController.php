@@ -85,6 +85,8 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
+        $doctor = Doctor::with(['user', 'specializations'])->findOrFail($doctor->id);
+
         $data = [
             "doctor" => $doctor
         ];

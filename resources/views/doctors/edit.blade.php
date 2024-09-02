@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Modifica il tuo profilo ' . $doctor->user->name)
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -25,7 +27,14 @@
 					@csrf
 					@method('PUT')
 					<div class="mb-3">
-						<h3 class="form-label">Titolo</h3>
+						<h3 class="form-label">Nome</h3>
+						<input type="text" class="form-control" name="name" required value="{{ $doctor->user->name }}">
+						@error('name')
+							<div>{{ $message }}</div>
+						@enderror
+					</div>
+					<div class="mb-3">
+						<h3 class="form-label">Cognome</h3>
 						<input type="text" class="form-control" name="surname" required value="{{ $doctor->surname }}">
 						@error('surname')
 							<div>{{ $message }}</div>

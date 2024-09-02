@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Crea il tuo profilo dottore')
+
 @section('content')
 	<h1>Aggiungi il tuo profilo da dottore</h1>
 	<form action="{{ route('doctors.store') }}" method="POST">

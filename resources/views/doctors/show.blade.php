@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $doctor->user->name)
+
 @section('content')
 	<div>
 		@if ($doctor->pic)
