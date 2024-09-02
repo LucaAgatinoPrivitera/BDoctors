@@ -3,7 +3,7 @@
 @section('title', 'Lista dei Medici')  <!-- Definisce il titolo della pagina -->
 
 @section('content')  <!-- Inizio della sezione content -->
-<div class="container mt-5">
+<div class="container mt-4">
     <h1 class="text-center mb-4">Lista dei Medici</h1>
     <table class="table table-hover table-bordered">
         <thead class="table-dark">

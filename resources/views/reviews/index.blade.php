@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'Lista delle recensioni')
+
 @section('content')
-<div class="container">
-    <h1>Lista delle Recensioni</h1>
-    <table class="table">
-        <thead>
+<div class="container container mt-4">
+    <h1 class="text-center mb-4">Lista delle Recensioni</h1>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
             <tr>
                 <th>Medico</th>
                 <th>Stelle</th>
@@ -17,16 +19,16 @@
         <tbody>
             @foreach ($reviews as $review)
                 <tr>
-                    <td>{{ $review->doctor->user->name }}</td>
-                    <td>
+                    <td class="align-middle">{{ $review->doctor->user->name }}</td>
+                    <td class="align-middle">
                         @for ($i = 1; $i <= 5; $i++)
                             <i class="fa{{ $i <= $review->stars ? 's' : 'r' }} fa-star text-warning"></i>
                         @endfor
                     </td>
-                    <td>{{ $review->review_text }}</td>
-                    <td>{{ $review->name_reviewer }}</td>
-                    <td>{{ $review->email_reviewer }}</td>
-                    <td><a href="{{ route('reviews.show', $review) }}" class="btn btn-primary">Mostra</a></td>
+                    <td class="align-middle">{{ $review->review_text }}</td>
+                    <td class="align-middle">{{ $review->name_reviewer }}</td>
+                    <td class="align-middle">{{ $review->email_reviewer }}</td>
+                    <td class="align-middle"><a href="{{ route('reviews.show', $review) }}" class="btn btn-primary">Mostra</a></td>
                 </tr>
             @endforeach
         </tbody>

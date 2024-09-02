@@ -23,25 +23,6 @@
 			@endforeach
 		</ul>
 
-		{{-- @php
-			$activeSponsorship = $doctor->activeSponsorship();
-			dd($activeSponsorship); // Questo mostrerà il contenuto dell'oggetto sponsorizzazione
-		@endphp --}}
-
-		{{-- Nuovo campo per la sponsorizzazione attiva --}}
-		<h3>Sponsorizzazione Attuale</h3>
-		@php
-			$activeSponsorship = $doctor->activeSponsorship();
-		@endphp
-		@if ($activeSponsorship)
-			<p>Nome: {{ $activeSponsorship->pivot->name }}</p>
-			<p>Prezzo: {{ $activeSponsorship->pivot->price }}</p>
-			{{-- <p>Data Inizio: {{ $activeSponsorship->pivot->date_start->format('d/m/Y') }}</p>
-			<p>Data Fine: {{ $activeSponsorship->pivot->date_end->format('d/m/Y') }}</p> --}}
-		@else
-			<p>Non è attiva alcuna sponsorizzazione.</p>
-		@endif
-
 	</div>
-	<a class="btn btn-success my-4" href="{{ route('doctors.index') }}">Torna alla lista dei dottori</a>
+	<a class="btn btn-success my-4" href="{{ route('home') }}">Torna alla lista dei dottori</a>
 @endsection
