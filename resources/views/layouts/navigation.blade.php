@@ -72,6 +72,9 @@
                 <a class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white ms-4" href="{{ route('login') }}">
                     Vuoi loggare?
                 </a>
+                <a class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white ms-4" href="{{ route('register') }}">
+                    Registrati
+                </a>
             </div>
             @endif
 
