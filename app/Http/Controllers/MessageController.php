@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
 
 class MessageController extends Controller
 {
@@ -23,7 +24,11 @@ class MessageController extends Controller
      */
     public function create()
     {
-        
+/*        $message = Message::all(); 
+ */       $doctors = Doctor::all();
+
+
+       return view('message.create', compact('doctors'))    ;
     }
 
     /**
@@ -31,7 +36,11 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'name_reviewer' => 'required|string|max:255',
+            'email_reviewer' => 'required|email|max:255',
+        ]);
     }
 
     /**
@@ -39,7 +48,7 @@ class MessageController extends Controller
      */
     public function show(Message $messages)
     {
-        //
+        return view('messages.show', compact('message'));
     }
 
     /**
