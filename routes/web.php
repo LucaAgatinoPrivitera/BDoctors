@@ -7,6 +7,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SponsorshipController;
 use App\Models\Doctor;
 
+
 //Rotta post login or guest
 Route::get('/', function () {
     // Recupera tutti i dottori dal database
@@ -39,8 +40,9 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
     // Route::resource('admin/doctors', DoctorController::class);
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

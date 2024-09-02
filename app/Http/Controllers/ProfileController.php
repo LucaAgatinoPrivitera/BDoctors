@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Doctor;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -13,37 +14,84 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+
+    public function show(Request $request)
+    {
+    $doctor = Doctor::where('user_id', $request->user()->id)->first();
+    return view('profile.show', compact('doctor'));
+    }
+
+
+
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
-        $doctor = Doctor::where('user_id', $request->user()->id)->first();
-        
-        if ($doctor) {
-            return view('profile.show', ['doctor' => $doctor]);
-        } else {
-            return view('profile.edit', [
-                'user' => $request->user(),
-            ]);
-        }
+    $user = $request->user();
+    $doctor = Doctor::where('user_id', $user->id)->first();
+    
+    return view('profile.edit', [
+        'user' => $user,
+        'doctor' => $doctor
+    ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+    public function update(Request $request): RedirectResponse
+{
+    // Validazione dei dati
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+        'bio' => 'nullable|string',
+        'specializations' => 'nullable|string',
+        'cv' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Assicurati che la validazione per il file sia corretta
+    ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    // Aggiorna le informazioni dell'utente
+    $user = $request->user();
+    $user->fill($request->only(['name', 'surname', 'email']));
+    
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
+    }
+    
+    $user->save();
+
+    // Aggiorna le informazioni del dottore
+    $doctor = Doctor::where('user_id', $user->id)->first();
+    if ($doctor) {
+        $doctor->fill($request->only(['name','surname','address', 'phone', 'bio', 'specializations','cv']));
+        
+        // Gestione del file CV
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $doctor->cv = $cvPath;
         }
 
-        $request->user()->save();
+        $doctor->save();
+    } else {
+        $doctor = new Doctor($request->only(['address', 'phone', 'bio', 'specializations']));
+        $doctor->user_id = $user->id;
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Gestione del file CV
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $doctor->cv = $cvPath;
+        }
+
+        $doctor->save();
     }
+
+    // Reindirizza alla vista di dettaglio del profilo
+    return Redirect::route('profile.show')->with('status', 'profile-updated');
+}
+
 
     /**
      * Delete the user's account.
