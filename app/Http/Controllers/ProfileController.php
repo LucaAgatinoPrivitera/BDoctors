@@ -21,6 +21,59 @@ class ProfileController extends Controller
     return view('profile.show', compact('doctor'));
     }
 
+    public function create(Request $request): View
+{
+    $user = $request->user();
+    
+    // Controlla se il profilo del dottore esiste
+    $doctor = Doctor::where('user_id', $user->id)->first();
+    
+    
+    if ($doctor) {
+        return redirect()->route('profile.edit');
+    }
+    
+    
+    return view('profile.create', [
+        'user' => $user
+    ]);
+}
+    
+public function store(Request $request): RedirectResponse
+{
+    // Validazione dei dati
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+        'bio' => 'nullable|string',
+        'specializations' => 'nullable|string',
+        'cv' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+    ]);
+
+    $user = Auth::user();
+    
+    // Creazione del profilo dottore
+    $doctor = new Doctor();
+    $doctor->user_id = $user->id;
+    $doctor->address = $validatedData['address'];
+    $doctor->phone = $validatedData['phone'];
+    $doctor->bio = $validatedData['bio'];
+    $doctor->specializations = $validatedData['specializations'];
+
+    // Gestione del file CV
+    if ($request->hasFile('cv')) {
+        $cvPath = $request->file('cv')->store('cvs', 'public');
+        $doctor->cv = $cvPath;
+    }
+
+    $doctor->save();
+
+    return redirect()->route('profile.show')->with('status', 'profile-created');
+}
+
+
 
 
     /**

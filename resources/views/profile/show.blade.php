@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if($doctor)
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-lg">
         <div class="row g-0">
@@ -53,4 +54,10 @@
         </div>
     </div>
 </div>
+@else
+        <!-- Mostra un messaggio se il profilo non esiste -->
+        <div class="alert alert-info">
+            <p>Non hai ancora creato un profilo. <a href="{{ route('profile.create') }}">Crea uno ora</a>.</p>
+        </div>
+    @endif
 @endsection
