@@ -17,7 +17,8 @@ class ProfileController extends Controller
 
     public function show(Request $request)
     {
-    $doctor = Doctor::where('user_id', $request->user()->id)->first();
+    // $doctor = Doctor::where('user_id', $request->user()->id)->first();
+    $doctor = Doctor::with('reviews')->where('user_id', $request->user()->id)->first();
     return view('profile.show', compact('doctor'));
     }
 

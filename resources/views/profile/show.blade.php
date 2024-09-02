@@ -54,6 +54,22 @@
         </div>
     </div>
 </div>
+<!-- Sezione Recensioni -->
+<div class="mt-5">
+    <h3>Recensioni</h3>
+    @if($doctor->reviews->isNotEmpty())
+        <ul class="list-group">
+            @foreach($doctor->reviews as $review)
+                <li class="list-group-item">
+                    <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }}:</strong> {{ $review->review_text }}
+                    <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-muted">Nessuna recensione ancora.</p>
+    @endif
+</div>
 @else
         <!-- Mostra un messaggio se il profilo non esiste -->
         <div class="alert alert-info">
