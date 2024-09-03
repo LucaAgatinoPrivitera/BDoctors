@@ -50,33 +50,48 @@
 								<a href="{{ asset($doctor->cv) }}" class="btn btn-primary mt-3">Visualizza il CV</a>
 							@endif
 
-							<!-- Pulsante per modificare il profilo -->
-							<a href="{{ route('profile.edit') }}" class="btn btn-warning mt-3 ms-2">Modifica Profilo</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Sezione Recensioni -->
-		<div class="mt-5">
-			<h3>Recensioni</h3>
-			@if ($doctor->reviews->isNotEmpty())
-				<ul class="list-group">
-					@foreach ($doctor->reviews as $review)
-						<li class="list-group-item">
-							<strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }}:</strong> {{ $review->review_text }}
-							<span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
-						</li>
-					@endforeach
-				</ul>
-			@else
-				<p class="text-muted">Nessuna recensione ancora.</p>
-			@endif
-		</div>
-	@else
-		<!-- Mostra un messaggio se il profilo non esiste -->
-		<div class="alert alert-info">
-			<p>Non hai ancora creato un profilo. <a href="{{ route('profile.create') }}">Crea uno ora</a>.</p>
-		</div>
-	@endif
+                    <!-- Pulsante per modificare il profilo -->
+                    <a href="{{ route('profile.edit') }}" class="btn btn-warning mt-3 ms-2">Modifica Profilo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sezione Recensioni -->
+<div class="mt-5">
+    <h3>Recensioni</h3>
+    @if($doctor->reviews->isNotEmpty())
+        <ul class="list-group">
+            @foreach($doctor->reviews as $review)
+                <li class="list-group-item">
+                    <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }}:</strong> {{ $review->review_text }}
+                    <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-muted">Nessuna recensione ancora.</p>
+    @endif
+</div>
+<!-- Sezione Messaggi -->
+<div class="mt-5">
+    <h3>Messaggi Ricevuti</h3>
+    @if($doctor->messages->isNotEmpty())
+        <ul class="list-group">
+            @foreach($doctor->messages as $message)
+                <li class="list-group-item">
+                    <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
+                    <p class="mb-0">{{ $message->message }}</p>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-muted">Nessun messaggio ricevuto.</p>
+    @endif
+@else
+        <!-- Mostra un messaggio se il profilo non esiste -->
+        <div class="alert alert-info">
+            <p>Non hai ancora creato un profilo. <a href="{{ route('profile.create') }}">Crea uno ora</a>.</p>
+        </div>
+    @endif
 @endsection

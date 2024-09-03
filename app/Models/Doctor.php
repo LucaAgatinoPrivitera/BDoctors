@@ -26,6 +26,11 @@ class Doctor extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public function specializations()
     {
         return $this->belongsToMany(Specialization::class, 'doctor_specialization', 'doctor_id', 'specialization_id');
