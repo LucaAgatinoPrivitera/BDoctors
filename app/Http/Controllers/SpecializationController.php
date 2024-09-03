@@ -15,13 +15,12 @@ class SpecializationController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        //
-    }
+{
+    $specializations = Specialization::all(); // Supponendo che le specializzazioni siano in una tabella
+
+    return view('doctors.create', compact('specializations'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -62,4 +61,6 @@ class SpecializationController extends Controller
     {
         //
     }
+
+    
 }
