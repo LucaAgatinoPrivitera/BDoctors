@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Crea il tuo profilo dottore')
+@section('title', 'Lascia la tua recensione')
 @section('content')
 	<div class="container">
 		<h1>Crea una nuova Recensione</h1>

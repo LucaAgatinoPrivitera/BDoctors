@@ -51,6 +51,7 @@
 
 @extends('layouts.app')
 
+@section('title', 'Crea il tuo messaggio')
 @section('content')
     <div>
         <div>

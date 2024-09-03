@@ -29,6 +29,7 @@
 </x-app-layout> --}}
 @extends('layouts.app')
 
+@section('title', 'Modifica profilo dottore')
 @section('content')
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-lg">
