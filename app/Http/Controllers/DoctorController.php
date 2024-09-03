@@ -15,8 +15,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        // Recupera tutti i medici dal database
-        $doctors = Doctor::with('user')->get();
+       
+        $doctors = Doctor::with('user' , 'specializations')->get();
 
         // Passa i dati alla vista
         return view('doctors.index', compact('doctors'));

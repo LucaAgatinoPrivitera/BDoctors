@@ -13,6 +13,7 @@
                 <th>Indirizzo</th>
                 <th>Telefono</th>
                 <th>Bio</th>
+                <th>Specializzazione</th>
                 <th>Foto</th>
                 <th>CV</th>
                 <th>Info</th>
@@ -31,6 +32,14 @@
                     <td class="align-middle">{{ $doctor->phone }}</td>
                     <!-- Bio -->
                     <td class="align-middle">{{ $doctor->bio }}</td>
+                    <!-- Specializzazione -->
+                    <td class="align-middle">
+                        @if($doctor->specializations->isNotEmpty())
+                            {{ $doctor->specializations->pluck('name')->join(', ') }}
+                        @else
+                            <span class="text-muted">Nessuna specializzazione</span>
+                        @endif
+                    </td>
                     <!-- Foto con segnaposto -->
                     <td class="text-center">
                         <img src="{{ $doctor->pic ? asset('storage/images/' . $doctor->pic) : 'https://via.placeholder.com/100' }}"
