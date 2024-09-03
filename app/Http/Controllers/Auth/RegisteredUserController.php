@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Specialization;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $specializations = Specialization::all();
+        return view('auth.register',compact('specializations'));
     }
 
     /**
@@ -28,23 +30,40 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+{
+    $request->validate([
+        // Name deve essere minimo di 2 caratteri
+        'name' => ['required', 'string', 'min:2', 'max:255'],
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Surname deve essere minimo di 2 caratteri
+        'surname' => ['required', 'string', 'min:2', 'max:255'],
 
-        event(new Registered($user));
+        // Address deve essere minimo di 6 caratteri (inclusi spazi)
+        'address' => ['required', 'string', 'min:6', 'max:255'],
 
-        Auth::login($user);
+        // Email deve essere valida e terminare con .com o un altro dominio
+        'email' => ['required', 'string', 'email', 'regex:/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/', 'max:255', 'unique:'.User::class],
 
-        return redirect(route('dashboard', absolute: false));
-    }
+        // Password con le regole predefinite (puoi personalizzare ulteriormente)
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+        // Specialization
+        'specialization' => ['required', 'exists:specializations,id'], // Validazione per specializzazione
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    
+
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    return redirect(route('dashboard'));
+}
+
 }
