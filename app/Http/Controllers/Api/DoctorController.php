@@ -19,4 +19,21 @@ class DoctorController extends Controller
         // Restituisci i dati in formato JSON
         return response()->json($doctors);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        // Recupera un medico specifico dal database con l'ID fornito
+        $doctor = Doctor::with('user')->find($id);
+
+        if ($doctor) {
+            // Restituisci i dati del medico in formato JSON
+            return response()->json($doctor);
+        } else {
+            // Restituisci un errore 404 se il medico non è trovato
+            return response()->json(['error' => 'Dottore non trovato'], 404);
+        }
+    }
 }
