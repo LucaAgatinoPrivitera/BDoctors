@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Doctor;
 use App\Models\Specialization;
 use Illuminate\Http\Request;
 
@@ -18,9 +18,8 @@ class SpecializationController extends Controller
 
     public function create()
 {
-    $specializations = Specialization::all(); // Supponendo che le specializzazioni siano in una tabella
-
-    return view('doctors.create', compact('specializations'));
+    $doctors = Doctor::all();
+    return view('specializations.create', compact('doctors'));
 }
 
     /**
@@ -28,7 +27,19 @@ class SpecializationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'doctors' => 'array'  // Aggiungi validazione per i dottori
+        ]);
+    
+        $specialization = Specialization::create($request->only('name'));
+    
+        // Associa i dottori alla specializzazione
+        if ($request->has('doctors')) {
+            $specialization->doctors()->attach($request->doctors);
+        }
+    
+        return redirect()->route('specializations.index')->with('success', 'Specializzazione creata con successo');
     }
 
     /**
@@ -44,7 +55,8 @@ class SpecializationController extends Controller
      */
     public function edit(Specialization $specialization)
     {
-        //
+        $doctors = Doctor::all();
+    return view('specializations.edit', compact('specialization', 'doctors'));
     }
 
     /**
@@ -52,7 +64,19 @@ class SpecializationController extends Controller
      */
     public function update(Request $request, Specialization $specialization)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'doctors' => 'array'  // Aggiungi validazione per i dottori
+        ]);
+    
+        $specialization->update($request->only('name'));
+    
+        // Sincronizza i dottori associati
+        if ($request->has('doctors')) {
+            $specialization->doctors()->sync($request->doctors);
+        }
+    
+        return redirect()->route('specializations.index')->with('success', 'Specializzazione aggiornata con successo');
     }
 
     /**
