@@ -37,11 +37,15 @@ class DoctorController extends Controller
     {
         $data = $request->validate([
             "surname" => "required|min:1|max:255",
-            "address" => "required|min:1|max:255",
-            "phone" => "required|min:1|max:20",
-            'bio' => 'nullable|string|max:500',
+            'address' => 'required|string|min:10|max:100',
+            'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
+            'email' => 'required|email',
+            'address' => 'required|string|min:10|max:100',
+            'specializations' => 'required|array|min:1',
+            'specializations.*' => 'string|exists:specializations,id', 
             'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'cv' => 'nullable|file',
+            
         ]);
 
         // Ottieni l'ID dell'utente autenticato
