@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Show della recensione')
+
 @section('content')
 <div class="container container-show mt-5">
     <div class="card shadow-lg">
