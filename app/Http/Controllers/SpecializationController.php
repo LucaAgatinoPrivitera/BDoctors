@@ -36,7 +36,7 @@ class SpecializationController extends Controller
      */
     public function show(Specialization $specialization)
     {
-        //
+        return view('specializations.show', compact('specialization'));
     }
 
     /**
