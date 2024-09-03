@@ -11,12 +11,24 @@ class DoctorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Recupera tutti i medici dal database
-        $doctors = Doctor::with('user')->get();
+        // Recupera tutti i medici con le loro specializzazioni e paginazione
+        $doctors = Doctor::with('specializations')->paginate($request->input('perPage', 30));
 
-        // Restituisci i dati in formato JSON
         return response()->json($doctors);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Doctor $doctor)
+    {
+        // Carica la relazione specializations con il medico
+        $doctor = Doctor::with('specializations')->findOrFail($doctor->id);
+
+        return response()->json($doctor);
+    }
+
+    // Aggiungi metodi per store(), update(), destroy() se necessario
 }
