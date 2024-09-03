@@ -7,6 +7,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SponsorshipController;
 use App\Models\Doctor;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SpecializationController;
 
 // Modifica la rotta principale per reindirizzare alla pagina di registrazione
 Route::get('/', function () {
@@ -33,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('doctors', DoctorController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('sponsorships', SponsorshipController::class);
-
+    Route::resource('specializations', SpecializationController::class);
     Route::resource('messages', MessageController::class);
    
     

@@ -12,7 +12,8 @@ class SpecializationController extends Controller
      */
     public function index()
     {
-        //
+        $specializations = Specialization::all();
+        return view('specializations.index', compact('specializations'));
     }
 
     public function create()
