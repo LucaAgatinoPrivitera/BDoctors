@@ -70,6 +70,21 @@
         <p class="text-muted">Nessuna recensione ancora.</p>
     @endif
 </div>
+<!-- Sezione Messaggi -->
+<div class="mt-5">
+    <h3>Messaggi Ricevuti</h3>
+    @if($doctor->messages->isNotEmpty())
+        <ul class="list-group">
+            @foreach($doctor->messages as $message)
+                <li class="list-group-item">
+                    <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
+                    <p class="mb-0">{{ $message->message }}</p>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-muted">Nessun messaggio ricevuto.</p>
+    @endif
 @else
         <!-- Mostra un messaggio se il profilo non esiste -->
         <div class="alert alert-info">
