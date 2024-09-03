@@ -8,13 +8,9 @@ use App\Http\Controllers\SponsorshipController;
 use App\Models\Doctor;
 use App\Http\Controllers\MessageController;
 
-//Rotta post login or guest
+// Modifica la rotta principale per reindirizzare alla pagina di registrazione
 Route::get('/', function () {
-    // Recupera tutti i dottori dal database
-    $doctors = Doctor::with('user')->get();
-
-    //Passa i dati alla vista
-    return view('welcome', ['doctors' => $doctors]);
+    return redirect()->route('register');
 })->name('home');
 
 // rotta show del guest
@@ -58,4 +54,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
-require __DIR__ . '/auth.php';
+
