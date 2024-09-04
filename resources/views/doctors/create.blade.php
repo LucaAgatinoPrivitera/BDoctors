@@ -14,21 +14,47 @@
 			@enderror
 		</div>
 
-		<div>
-			<label class="my-2 py-1" for="address">Indirizzo:</label>
-			<input type="text" id="address" name="address" value="Inserisci il tuo indirizzo">
+		  <!-- Address -->
+		<div class="form-group">
+			<label for="address">Indirizzo</label>
+			<input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}">
 			@error('address')
-				<div>{{ $message }}</div>
+				<div class="invalid-feedback">
+					{{ $message }}
+				</div>
 			@enderror
 		</div>
 
-		<div>
-			<label class="my-2 py-1" for="phone">Numero di telefono:</label>
-			<input type="text" id="phone" name="phone" value="Inserisci il numero di telefono">
+		 <!-- Phone -->
+		 <div class="form-group">
+			<label for="phone">Numero di Telefono</label>
+			<input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
 			@error('phone')
-				<div>{{ $message }}</div>
+				<div class="invalid-feedback">
+					{{ $message }}
+				</div>
 			@enderror
 		</div>
+
+		<!-- Specializations -->
+		<div class="form-group">
+			<label for="specializations">Specializzazioni</label>
+			@foreach($specializations as $specialization)
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" name="specializations[]" value="{{ $specialization->id }}" {{ in_array($specialization->id, old('specializations', [])) ? 'checked' : '' }}>
+					<label class="form-check-label">{{ $specialization->name }}</label>
+				</div>
+			@endforeach
+			@error('specializations')
+				<div class="invalid-feedback">
+					{{ $message }}
+				</div>
+			@enderror
+		</div>
+	
+		<button type="submit" class="btn btn-primary">Salva</button>
+	</form>
+
 
 		<div>
 			<label class="my-2 py-1" for="bio">Descrizione</label>
