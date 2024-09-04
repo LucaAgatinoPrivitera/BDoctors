@@ -51,11 +51,14 @@ class ProfileController extends Controller
     {
         // Validazione dei dati
         $validatedData = $request->validate([
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'bio' => 'nullable|string',
-            'specializations' => 'nullable|array',
+            'name' => 'required|string|min:3|max:255',
+            'surname' => 'required|string|min:3|max:255',
+            'address' => 'required|string|min:6|max:255',
+            'phone' => 'required|numeric|min:9',
+            'bio' => 'required|string|min:15',
+            'specializations' => 'required|array',
             'specializations.*' => 'exists:specializations,id',
+            'pic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'cv' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
@@ -64,14 +67,24 @@ class ProfileController extends Controller
         // Creazione del profilo dottore
         $doctor = new Doctor();
         $doctor->user_id = $user->id;
+        $doctor->surname = $validatedData['surname'];
         $doctor->address = $validatedData['address'];
         $doctor->phone = $validatedData['phone'];
         $doctor->bio = $validatedData['bio'];
+        
 
-        // Gestione del file CV
+        // Gestione del file immagine del profilo
+        if ($request->hasFile('pic')) {
+            $picPath = $request->file('pic')->store('pics', 'public');
+            $doctor->pic = $picPath;
+        }
+
         if ($request->hasFile('cv')) {
             $cvPath = $request->file('cv')->store('cvs', 'public');
             $doctor->cv = $cvPath;
+        } else {
+            // Imposta un valore di default per 'cv' se non è stato caricato un file
+            $doctor->cv = 'path/to/placeholder.pdf'; // Modifica secondo le tue esigenze
         }
 
         $doctor->save();
@@ -107,11 +120,14 @@ class ProfileController extends Controller
     {
         // Validazione dei dati
         $validatedData = $request->validate([
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'bio' => 'nullable|string',
-            'specializations' => 'nullable|array',
+            'name' => 'required|string|min:3|max:255',
+            'surname' => 'required|string|min:3|max:255',
+            'address' => 'required|string|min:6|max:255',
+            'phone' => 'required|numeric|min:9',
+            'bio' => 'required|string|min:15',
+            'specializations' => 'required|array',
             'specializations.*' => 'exists:specializations,id',
+            'pic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'cv' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
@@ -127,13 +143,23 @@ class ProfileController extends Controller
         $doctor = Doctor::where('user_id', $user->id)->first();
         if ($doctor) {
             $doctor->address = $validatedData['address'];
+            $doctor->surname = $validatedData['surname'];
             $doctor->phone = $validatedData['phone'];
             $doctor->bio = $validatedData['bio'];
+            
 
-            // Gestione del file CV
+            // Gestione del file immagine del profilo
+            if ($request->hasFile('pic')) {
+                $picPath = $request->file('pic')->store('pics', 'public');
+                $doctor->pic = $picPath;
+            }
+
             if ($request->hasFile('cv')) {
                 $cvPath = $request->file('cv')->store('cvs', 'public');
                 $doctor->cv = $cvPath;
+            } else {
+                // Imposta un valore di default per 'cv' se non è stato caricato un file
+                $doctor->cv = 'path/to/placeholder.pdf'; // Modifica secondo le tue esigenze
             }
 
             $doctor->save();
@@ -148,6 +174,11 @@ class ProfileController extends Controller
             $doctor->address = $validatedData['address'];
             $doctor->phone = $validatedData['phone'];
             $doctor->bio = $validatedData['bio'];
+
+            if ($request->hasFile('pic')) {
+                $picPath = $request->file('pic')->store('pics', 'public');
+                $doctor->pic = $picPath;
+            }
 
             if ($request->hasFile('cv')) {
                 $cvPath = $request->file('cv')->store('cvs', 'public');

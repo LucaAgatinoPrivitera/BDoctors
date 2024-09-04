@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Modifica profilo dottore')
+
 @section('content')
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-lg">
@@ -46,8 +47,15 @@
                 <!-- Specializzazioni del dottore -->
                 <div class="mb-3">
                     <label for="specializations" class="form-label">Specializzazioni</label>
-                    <input type="text" id="specializations" name="specializations" class="form-control" value="{{ old('specializations', implode(', ', $doctor->specializations->pluck('name')->toArray())) }}">
-                    <small class="form-text text-muted">Inserisci le specializzazioni separate da virgola.</small>
+                    <select id="specializations" name="specializations[]" class="form-control" multiple>
+                        @foreach ($specializations as $specialization)
+                            <option value="{{ $specialization->id }}"
+                                {{ in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                {{ $specialization->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small class="form-text text-muted">Seleziona le specializzazioni pertinenti.</small>
                 </div>
 
                 <!-- CV del dottore -->
@@ -68,4 +76,3 @@
     </div>
 </div>
 @endsection
-
