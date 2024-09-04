@@ -7,11 +7,7 @@
     <div class="card shadow-lg border-0 rounded-lg">
         <div class="card-body">
             <h2 class="card-title mb-4">
-                @if(isset($create) && $create)
-                    Crea il tuo Profilo
-                @else
-                    Modifica Profilo
-                @endif
+                Crea Profilo
             </h2>
 
             <!-- Form di creazione del profilo -->
