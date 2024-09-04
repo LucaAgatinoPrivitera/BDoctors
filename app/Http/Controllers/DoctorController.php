@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Specialization;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,10 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('doctors.create');
+        $specializations = Specialization::all();
+        return view('doctors.create', [
+            'specializations' => $specializations // Passa la variabile alla vista
+        ]);
     }
 
     /**

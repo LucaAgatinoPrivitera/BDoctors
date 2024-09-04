@@ -47,7 +47,7 @@
 
 							<!-- Curriculum Vitae -->
 							@if ($doctor->cv)
-								<a href="{{ asset($doctor->cv) }}" class="btn btn-primary mt-3">Visualizza il CV</a>
+							<a href="{{ asset('storage/' . $doctor->cv) }}" class="btn btn-primary mt-3">Visualizza il CV</a>
 							@endif
 
                     <!-- Pulsante per modificare il profilo -->
