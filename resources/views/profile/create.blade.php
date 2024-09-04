@@ -48,12 +48,30 @@
                     <textarea id="bio" name="bio" class="form-control" rows="3">{{ old('bio', $doctor->bio ?? '') }}</textarea>
                 </div>
 
-                <!-- Specializzazioni del dottore -->
+                {{-- <!-- Specializzazioni del dottore -->
                 <div class="mb-3">
                     <label for="specializations" class="form-label">Specializzazioni</label>
                     <input type="text" id="specializations" name="specializations" class="form-control" value="{{ old('specializations', $doctor->specializations ?? '') }}">
                     <small class="form-text text-muted">Inserisci le specializzazioni separate da virgola.</small>
-                </div>
+                </div> --}}
+                <!-- Specializzazioni del dottore -->
+<div class="mb-3">
+    <label class="form-label">Specializzazioni</label>
+    <div class="form-check">
+        @foreach($specializations as $specialization)
+            <input type="checkbox" id="specialization_{{ $specialization->id }}" name="specializations[]" 
+                value="{{ $specialization->id }}" 
+                class="form-check-input"
+                @if(isset($doctor) && $doctor->specializations->contains($specialization->id)) checked @endif
+            >
+            <label class="form-check-label" for="specialization_{{ $specialization->id }}">
+                {{ $specialization->name }}
+            </label>
+            <br>
+        @endforeach
+    </div>
+    <small class="form-text text-muted">Seleziona le specializzazioni pertinenti.</small>
+</div>
 
                 <!-- CV del dottore -->
                 <div class="mb-3">
