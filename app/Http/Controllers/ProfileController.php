@@ -80,16 +80,27 @@ public function store(Request $request): RedirectResponse
     /**
      * Display the user's profile form.
      */
+    
     public function edit(Request $request): View
     {
     $user = $request->user();
     $doctor = Doctor::where('user_id', $user->id)->first();
-    
+
+    if (!$doctor) {
+        // Se il profilo non esiste, puoi passare una variabile per indicarlo nella vista
+        return view('profile.create', [
+            'user' => $user,
+            'create' => true
+        ]);
+    }
+
     return view('profile.edit', [
         'user' => $user,
         'doctor' => $doctor
     ]);
     }
+
+
 
     /**
      * Update the user's profile information.
