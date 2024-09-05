@@ -14,7 +14,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-
+    
     public function show(Request $request)
     {
     // $doctor = Doctor::where('user_id', $request->user()->id)->first();
@@ -22,8 +22,11 @@ class ProfileController extends Controller
     return view('profile.show', compact('doctor'));
     }
 
-    public function create(Request $request): View
-{
+    public function create()
+    {
+        return view('profile.create');
+    
+    
     $user = $request->user();
     
     // Controlla se il profilo del dottore esiste
