@@ -16,9 +16,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-       
-        $doctors = Doctor::with('user' , 'specializations')->get();
 
+        $doctors = Doctor::with('user', 'specializations')->get();
         // Passa i dati alla vista
         return view('doctors.index', compact('doctors'));
     }
@@ -26,13 +25,14 @@ class DoctorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    // Nel tuo DoctorController
     public function create()
     {
-        $specializations = Specialization::all();
-        return view('doctors.create', [
-            'specializations' => $specializations // Passa la variabile alla vista
-        ]);
+        $specialization = specialization::all(); // Recupera tutte le specializzazioni dal database
+        return view('doctors.create', compact('specializations')); // Passa le specializzazioni alla vista
     }
+    
+    
 
     /**
      * Store a newly created resource in storage.

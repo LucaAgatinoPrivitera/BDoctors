@@ -40,33 +40,48 @@
                     </div>
 
                     <!-- Biografia del dottore -->
-                    <div class="col-12 mb-3">
-                        <label for="bio" class="form-label">Biografia</label>
-                        <textarea id="bio" name="bio" class="form-control" rows="2">{{ old('bio', $doctor->bio ?? '') }}</textarea>
-                    </div>
+                    <form action="{{ route('doctors.store') }}" method="POST">
+                        @csrf <!-- Questo è per la sicurezza, necessario nei form Laravel -->
+                    
+     <!-- create.blade.php -->
+<form action="{{ route('doctors.store') }}" method="POST">
+    @csrf <!-- Questo token di sicurezza è necessario per i form in Laravel -->
 
-                    <!-- Specializzazioni del dottore -->
-                    <div class="col-12 mb-3">
-                        <label class="form-label">Specializzazioni</label>
-                        <div class="row">
-                            @foreach($specializations as $specialization)
-                                <div class="col-12 col-md-4 mb-2">
-                                    <input type="checkbox" id="specialization_{{ $specialization->id }}" name="specializations[]" 
-                                        value="{{ $specialization->id }}" 
-                                        class="form-check-input"
-                                        @if(isset($doctor) && $doctor->specializations->contains($specialization->id)) checked @endif
-                                    >
-                                    <label class="form-check-label" for="specialization_{{ $specialization->id }}">
-                                        {{ $specialization->name }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                        @error('specializations')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                        <small class="form-text text-muted">Seleziona almeno una specializzazione.</small>
-                    </div>
+    <!-- Altri campi per il dottore -->
+
+    <div class="form-group">
+        <label>Specializzazioni:</label><br>
+
+        <!-- Itera su tutte le specializzazioni per creare una checkbox per ciascuna -->
+        @if($specializations->count() > 0)
+            @foreach($specializations as $specialization)
+                <div class="form-check">
+                    <input type="checkbox" name="specializzazioni[]" value="{{ $specializzazione->id }}" id="specializzazione-{{ $specializzazione->id }}">
+                    <label for="specializzazione-{{ $specializzazione->id }}">{{ $specializzazione->nome }}</label><br>
+                </div>
+            @endforeach
+        @else
+        <form action="">
+            <fieldset>
+            <input type="checkbox" name="html" value="html"/> Dermatologia 
+            <br />
+            <input type="checkbox" name="css" value="css"/> Neurologia
+            <br />
+            <input type="checkbox" name="javascript" value="javascript"/>Pediatria
+            <br />
+            <input type="checkbox" name="css" value="css"/> Psichiatria'
+            <br />
+            <input type="checkbox" name="css" value="css"/> Ginecologia
+            <br />
+            <input type="checkbox" name="css" value="css"/> Urologia
+            </fieldset>
+            </form>
+        @endif
+    </div>
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+
+
 
                     <!-- Foto del Profilo e CV del dottore -->
                     <div class="col-12 mb-3">

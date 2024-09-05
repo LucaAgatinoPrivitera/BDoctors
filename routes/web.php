@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('sponsorships', SponsorshipController::class);
     Route::resource('specializations', SpecializationController::class);
     Route::resource('messages', MessageController::class);
+    Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
+
    
     
 
