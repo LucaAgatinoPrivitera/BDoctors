@@ -11,12 +11,14 @@ class DoctorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+public function index(Request $request)
     {
-        // Recupera tutti i medici dal database
-        $doctors = Doctor::with('user')->get();
+        $perPage = $request->get('perPage', 10); // Recupera 'perPage' con default a 10
+        $page = $request->get('page', 1); // Recupera 'page' con default a 1
 
-        // Restituisci i dati in formato JSON
+        // Recupera i medici con paginazione
+        $doctors = Doctor::with('specializations')->paginate($perPage, ['*'], 'page', $page);
+
         return response()->json($doctors);
     }
 
@@ -26,7 +28,7 @@ class DoctorController extends Controller
     public function show($id)
     {
         // Recupera un medico specifico dal database con l'ID fornito
-        $doctor = Doctor::with('user')->find($id);
+        $doctor = Doctor::with(['user', 'specializations'])->find($id);
 
         if ($doctor) {
             // Restituisci i dati del medico in formato JSON

@@ -1,41 +1,14 @@
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form',['user' => $user])
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout> --}}
 @extends('layouts.app')
 
 @section('title', 'Modifica profilo dottore')
+
 @section('content')
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-lg">
         <div class="card-body">
             <h2 class="card-title">Modifica Profilo</h2>
 
+            @if ($doctor)
             <!-- Form di aggiornamento del profilo -->
             <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
@@ -74,8 +47,15 @@
                 <!-- Specializzazioni del dottore -->
                 <div class="mb-3">
                     <label for="specializations" class="form-label">Specializzazioni</label>
-                    <input type="text" id="specializations" name="specializations" class="form-control" value="{{ old('specializations', implode(', ', $doctor->specializations->pluck('name')->toArray())) }}">
-                    <small class="form-text text-muted">Inserisci le specializzazioni separate da virgola.</small>
+                    <select id="specializations" name="specializations[]" class="form-control" multiple>
+                        @foreach ($specializations as $specialization)
+                            <option value="{{ $specialization->id }}"
+                                {{ in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                {{ $specialization->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small class="form-text text-muted">Seleziona le specializzazioni pertinenti.</small>
                 </div>
 
                 <!-- CV del dottore -->
@@ -89,6 +69,9 @@
 
                 <button type="submit" class="btn btn-primary">Salva Modifiche</button>
             </form>
+            @else
+                <p>Non è stato trovato alcun profilo da modificare. <a href="{{ route('profile.create') }}">Crea un nuovo profilo.</a></p>
+            @endif
         </div>
     </div>
 </div>
