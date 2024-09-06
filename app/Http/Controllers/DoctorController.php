@@ -28,7 +28,7 @@ class DoctorController extends Controller
     // Nel tuo DoctorController
     public function create()
     {
-        $specialization = specialization::all(); // Recupera tutte le specializzazioni dal database
+        $specializations = Specialization::all(); // Recupera tutte le specializzazioni dal database
         return view('doctors.create', compact('specializations')); // Passa le specializzazioni alla vista
     }
     
