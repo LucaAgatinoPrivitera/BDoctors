@@ -34,12 +34,13 @@
                     <td class="align-middle">{{ $doctor->bio }}</td>
                     <!-- Specializzazione -->
                     <td class="align-middle">
-                        @if($doctor->specializations->isNotEmpty())
+                        @if($doctor->specializations && $doctor->specializations->isNotEmpty())
                             {{ $doctor->specializations->pluck('name')->join(', ') }}
                         @else
                             <span class="text-muted">Nessuna specializzazione</span>
                         @endif
                     </td>
+                    
                     <!-- Foto con segnaposto -->
                     <td class="text-center">
                         <img src="{{ $doctor->pic ? asset('storage/images/' . $doctor->pic) : 'https://via.placeholder.com/100' }}"
