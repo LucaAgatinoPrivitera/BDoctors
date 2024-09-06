@@ -14,6 +14,9 @@ Route::middleware('api')->group(function () {
     Route::post('/doctors/{doctorId}/reviews', [ReviewController::class, 'store']);
     Route::get('/doctors', [DoctorController::class, 'index']);
 
+    // Questo serve per far funzionare il search della spec, altrimenti da sempre la lista di tutti... 1 ora per sta riga
+    Route::get('/doctors', [DoctorController::class, 'getDoctors']);
+
     // Rotta per ottenere i dettagli di un singolo dottore
     Route::get('/doctors/{id}', [DoctorController::class, 'show']);
 
