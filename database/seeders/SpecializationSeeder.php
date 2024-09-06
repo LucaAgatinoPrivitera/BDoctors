@@ -14,7 +14,6 @@ class SpecializationSeeder extends Seeder
     public function run(): void
     {
         DB::table('specializations')->insert([
-            ['name' => 'Cardiologia'],
             ['name' => 'Dermatologia'],
             ['name' => 'Neurologia'],
             ['name' => 'Pediatria'],
