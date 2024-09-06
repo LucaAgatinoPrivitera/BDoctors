@@ -48,38 +48,28 @@
     @csrf <!-- Questo token di sicurezza è necessario per i form in Laravel -->
 
     <!-- Altri campi per il dottore -->
-
-    <div class="form-group">
-        <label>Specializzazioni:</label><br>
-
         <!-- Itera su tutte le specializzazioni per creare una checkbox per ciascuna -->
-        @if($specializations->count() > 0)
-            @foreach($specializations as $specialization)
-                <div class="form-check">
-                    <input type="checkbox" name="specializzazioni[]" value="{{ $specializzazione->id }}" id="specializzazione-{{ $specializzazione->id }}">
-                    <label for="specializzazione-{{ $specializzazione->id }}">{{ $specializzazione->nome }}</label><br>
-                </div>
-            @endforeach
-        @else
-        <form action="">
-            <fieldset>
-            <input type="checkbox" name="html" value="html"/> Dermatologia 
-            <br />
-            <input type="checkbox" name="css" value="css"/> Neurologia
-            <br />
-            <input type="checkbox" name="javascript" value="javascript"/>Pediatria
-            <br />
-            <input type="checkbox" name="css" value="css"/> Psichiatria'
-            <br />
-            <input type="checkbox" name="css" value="css"/> Ginecologia
-            <br />
-            <input type="checkbox" name="css" value="css"/> Urologia
-            </fieldset>
-            </form>
-        @endif
-    </div>
-    <button type="submit" class="btn btn-primary">Salva</button>
-</form>
+        <h5 class="mt-4">Seleziona le Specializzazioni</h5>
+        <div class="form-check">
+            <input type="checkbox" name="specializations[]" value="1" id="specialization-1">
+            <label for="specialization-1">Cardiologia</label><br>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="specializations[]" value="2" id="specialization-2">
+            <label for="specialization-2">Neurologia</label><br>
+        </div>
+           <div class="form-check">
+                <input type="checkbox" name="specializations[]" value="5" id="specialization-5">
+                <label for="specialization-5">Oncologia</label><br>
+            </div>
+        <div class="form-check">
+            <input type="checkbox" name="specializations[]" value="5" id="specialization-5">
+            <label for="specialization-5">Urologia</label><br>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="specializations[]" value="5" id="specialization-5">
+            <label for="specialization-5">Dermatologia</label><br>
+        </div>
 
 
 
