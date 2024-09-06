@@ -19,18 +19,18 @@
 							<p class="card-text text-muted mb-4">Indirizzo: {{ $doctor->address }}</p>
 							<p class="card-text text-muted">Telefono: {{ $doctor->phone }}</p>
 							<p class="card-text mt-4">{{ $doctor->bio }}</p>
+             <!-- Specializzazioni -->
+                  @if (isset($doctor->specializations) && $doctor->specializations->isNotEmpty())
+                  <h5 class="mt-4">Specializzazioni</h5>
+                     <ul class="list-group list-group-flush">
+                  @foreach ($doctor->specializations as $specialization)
+                   <li class="list-group-item">{{ $specialization->name }}</li>
+                @endforeach
+            </ul>
+              @else
+             <p class="text-muted mt-4">Non ci sono specializzazioni specificate.</p>
+                     @endif
 
-							<!-- Specializzazioni -->
-							@if ($doctor->specializations->isNotEmpty())
-								<h5 class="mt-4">Specializzazioni</h5>
-								<ul class="list-group list-group-flush">
-									@foreach ($doctor->specializations as $specialization)
-										<li class="list-group-item">{{ $specialization->name }}</li>
-									@endforeach
-								</ul>
-							@else
-								<p class="text-muted mt-4">Non ci sono specializzazioni specificate.</p>
-							@endif
 
 							<!-- Sponsorizzazione attiva -->
 							@if ($doctor->activeSponsorship())
