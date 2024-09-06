@@ -32,10 +32,8 @@ class DoctorController extends Controller
         $doctor = Doctor::with(['user', 'specializations'])->where('slug', $slug)->first();
 
         if ($doctor) {
-            // Restituisci i dati del medico in formato JSON
             return response()->json($doctor);
         } else {
-            // Restituisci un errore 404 se il medico non è trovato
             return response()->json(['error' => 'Dottore non trovato'], 404);
         }
     }
