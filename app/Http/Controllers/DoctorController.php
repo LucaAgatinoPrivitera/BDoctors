@@ -28,11 +28,17 @@ class DoctorController extends Controller
     // Nel tuo DoctorController
     public function create()
     {
-        $specializations = Specialization::all(); // Recupera tutte le specializzazioni dal database
+        $specializations = specialization::all(); // Recupera tutte le specializzazioni dal database
+
         return view('doctors.create', compact('specializations')); // Passa le specializzazioni alla vista
+        $doctor->specializations = $doctor->specializations ?: collect();
     }
-    
-    
+
+    public function getSpecializationsAttribute($value)
+    {
+        return $value ? collect($value) : collect();
+    }
+
 
     /**
      * Store a newly created resource in storage.
