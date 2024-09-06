@@ -89,9 +89,5 @@
         <p class="text-muted">Nessun messaggio ricevuto.</p>
     @endif
 @else
-        <!-- Mostra un messaggio se il profilo non esiste -->
-        <div class="alert alert-info">
-            <p>Non hai ancora creato un profilo. <a href="{{ route('profile.create') }}">Crea uno ora</a>.</p>
-        </div>
     @endif
 @endsection
