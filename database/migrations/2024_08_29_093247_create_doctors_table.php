@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('pic')->nullable();
             $table->string('cv')->nullable();
+            $table->string('slug')->unique();
         });
 
         Schema::enableForeignKeyConstraints();

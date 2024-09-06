@@ -18,7 +18,8 @@ Route::middleware('api')->group(function () {
     Route::get('/doctors', [DoctorController::class, 'getDoctors']);
 
     // Rotta per ottenere i dettagli di un singolo dottore
-    Route::get('/doctors/{id}', [DoctorController::class, 'show']);
+    // Route::get('/doctors/{id}', [DoctorController::class, 'show']);
+    Route::get('/doctors/{slug}', [DoctorController::class, 'show']);
 
     Route::get('/specializations', [SpecializationController::class, 'index']);
 });

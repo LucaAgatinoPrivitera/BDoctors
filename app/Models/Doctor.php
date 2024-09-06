@@ -17,6 +17,7 @@ class Doctor extends Model
         'pic',
         'phone',
         'bio',
+        'slug',
         'user_id',
         'user_name'
     ];
