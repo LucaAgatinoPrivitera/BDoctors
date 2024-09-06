@@ -9,19 +9,21 @@ class DoctorSeeder extends Seeder
 {
     public function run()
     {
-
-        // Ottieni tutti gli ID degli utenti
-        $userIds = DB::table('users')->pluck('id');
+        // Ottieni tutti gli ID degli utenti e i loro nomi
+        $users = DB::table('users')->get(['id', 'name']);
+        $userIds = $users->pluck('id');
+        $userNames = $users->pluck('name', 'id');
 
         DB::table('doctors')->insert([
             [
                 'user_id' => $userIds->random(),
-                'surname' => 'Rossi',
+                'surname' => $surname = 'Rossi',
                 'address' => 'Via Roma, 1',
                 'cv' => 'path/to/cv1.pdf',
                 'pic' => 'path/to/pic1.jpg',
                 'phone' => '0123456789',
                 'bio' => 'Medico esperto in cardiologia.',
+                'slug' => $userNames->random() . '-' . $surname,
             ],
             [
                 'user_id' => $userIds->random(),
@@ -31,6 +33,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic2.jpg',
                 'phone' => '0123456788',
                 'bio' => 'Medico esperto in neurologia.',
+                'slug' => $userNames->random() . '-' . 'Verdi',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -40,6 +43,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic3.jpg',
                 'phone' => '0123456787',
                 'bio' => 'Medico esperto in pediatria.',
+                'slug' => $userNames->random() . '-' . 'Bianchi',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -49,6 +53,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic4.jpg',
                 'phone' => '0123456786',
                 'bio' => 'Medico esperto in dermatologia.',
+                'slug' => $userNames->random() . '-' . 'Neri',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -58,6 +63,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic5.jpg',
                 'phone' => '0123456785',
                 'bio' => 'Medico esperto in ortopedia.',
+                'slug' => $userNames->random() . '-' . 'Gialli',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -67,6 +73,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic6.jpg',
                 'phone' => '0123456784',
                 'bio' => 'Medico esperto in oncologia.',
+                'slug' => $userNames->random() . '-' . 'Marroni',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -76,6 +83,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic7.jpg',
                 'phone' => '0123456783',
                 'bio' => 'Medico esperto in ginecologia.',
+                'slug' => $userNames->random() . '-' . 'Rosa',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -85,6 +93,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic8.jpg',
                 'phone' => '0123456782',
                 'bio' => 'Medico esperto in cardiologia pediatrica.',
+                'slug' => $userNames->random() . '-' . 'Azzurri',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -94,6 +103,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic9.jpg',
                 'phone' => '0123456781',
                 'bio' => 'Medico esperto in neurochirurgia.',
+                'slug' => $userNames->random() . '-' . 'Biondi',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -103,6 +113,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic10.jpg',
                 'phone' => '0123456780',
                 'bio' => 'Medico esperto in reumatologia.',
+                'slug' => $userNames->random() . '-' . 'Castagna',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -112,6 +123,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic11.jpg',
                 'phone' => '0123456779',
                 'bio' => 'Medico esperto in medicina generale.',
+                'slug' => $userNames->random() . '-' . 'Cappelli',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -121,6 +133,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic12.jpg',
                 'phone' => '0123456778',
                 'bio' => 'Medico esperto in endocrinologia.',
+                'slug' => $userNames->random() . '-' . 'Oliva',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -130,6 +143,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic13.jpg',
                 'phone' => '0123456777',
                 'bio' => 'Medico esperto in urologia.',
+                'slug' => $userNames->random() . '-' . 'Ponte',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -139,6 +153,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic14.jpg',
                 'phone' => '0123456776',
                 'bio' => 'Medico esperto in medicina sportiva.',
+                'slug' => $userNames->random() . '-' . 'Ferrari',
             ],
             [
                 'user_id' => $userIds->random(),
@@ -148,6 +163,7 @@ class DoctorSeeder extends Seeder
                 'pic' => 'path/to/pic15.jpg',
                 'phone' => '0123456775',
                 'bio' => 'Medico esperto in psichiatria.',
+                'slug' => $userNames->random() . '-' . 'Lombardi',
             ],
         ]);
     }

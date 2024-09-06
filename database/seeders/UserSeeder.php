@@ -14,77 +14,77 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Alice Johnson',
+                'name' => 'Alice',
                 'email' => 'alice.johnson@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Bob Smith',
+                'name' => 'Bob',
                 'email' => 'bob.smith@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Charlie Brown',
+                'name' => 'Charlie',
                 'email' => 'charlie.brown@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'David Wilson',
+                'name' => 'David',
                 'email' => 'david.wilson@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Eva Davis',
+                'name' => 'Eva',
                 'email' => 'eva.davis@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Frank Miller',
+                'name' => 'Frank',
                 'email' => 'frank.miller@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Grace Lee',
+                'name' => 'Grace',
                 'email' => 'grace.lee@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Henry Moore',
+                'name' => 'Henry',
                 'email' => 'henry.moore@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Ivy Taylor',
+                'name' => 'Ivy',
                 'email' => 'ivy.taylor@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Jack Anderson',
+                'name' => 'Jack',
                 'email' => 'jack.anderson@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Karen Thomas',
+                'name' => 'Karen',
                 'email' => 'karen.thomas@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Liam Martinez',
+                'name' => 'Liam',
                 'email' => 'liam.martinez@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Mia Garcia',
+                'name' => 'Mia',
                 'email' => 'mia.garcia@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Noah Rodriguez',
+                'name' => 'Noah',
                 'email' => 'noah.rodriguez@example.com',
                 'password' => Hash::make('password123'),
             ],
             [
-                'name' => 'Olivia Wilson',
+                'name' => 'Olivia',
                 'email' => 'olivia.wilson@example.com',
                 'password' => Hash::make('password123'),
             ],

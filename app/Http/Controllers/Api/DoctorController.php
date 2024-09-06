@@ -26,10 +26,10 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($slug)
     {
-        // Recupera un medico specifico dal database con l'ID fornito
-        $doctor = Doctor::with(['user', 'specializations'])->find($id);
+        // Recupera un medico specifico dal database con lo slug fornito
+        $doctor = Doctor::with(['user', 'specializations'])->where('slug', $slug)->first();
 
         if ($doctor) {
             // Restituisci i dati del medico in formato JSON
@@ -39,6 +39,7 @@ class DoctorController extends Controller
             return response()->json(['error' => 'Dottore non trovato'], 404);
         }
     }
+
 
     public function getDoctors(Request $request)
     {

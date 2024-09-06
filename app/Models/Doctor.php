@@ -18,7 +18,8 @@ class Doctor extends Model
         'phone',
         'bio',
         'user_id',
-        'user_name'
+        'user_name',
+        'slug'
     ];
 
     public function reviews()
