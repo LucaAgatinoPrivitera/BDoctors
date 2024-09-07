@@ -31,7 +31,10 @@ class DoctorController extends Controller
     {
         $specializations = specialization::all(); // Recupera tutte le specializzazioni dal database
 
-        return view('doctors.create', compact('specializations')); // Passa le specializzazioni alla vista
+        $selectedSpecialization = session('specialization');
+        
+
+        return view('doctors.create', compact('specializations','selectedSpecialization')); // Passa le specializzazioni alla vista
         $doctor->specializations = $doctor->specializations ?: collect();
     }
 
@@ -46,36 +49,41 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            "surname" => "required|min:1|max:255",
-            'email' => 'required|email|unique:users,email',
-            'address' => 'required|string|min:10|max:100',
-            'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
-            'bio' => 'nullable|string|max:500',
-            'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'cv' => 'nullable|file',
-            'specializations' => 'required|array|min:1',
-        ]);
+    // Validazione dei dati
+    $data = $request->validate([
+        'surname' => 'required|string|max:255',
+        'address' => 'required|string|min:10|max:100',
+        'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
+        'bio' => 'nullable|string|max:500',
+        'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'cv' => 'nullable|file',
+        'specializations' => 'required|array|min:1',
+    ]);
 
-        // Ottieni l'ID dell'utente autenticato
-        $userId = Auth::id();
+    // Ottieni l'ID dell'utente autenticato
+    $userId = Auth::id();
+    $data['user_id'] = $userId; // Associa l'utente al dottore
 
-        // Aggiungi l'ID dell'utente all'array dei dati
-        $data['user_id'] = $userId;
-
-        // Gestisci l'upload dell'immagine
-        if ($request->hasFile('pic')) {
-            $file = $request->file('pic');
-            $filename = $file->store('public/images'); // Salva il file nella cartella public/images
-            $data['pic'] = basename($filename); // Salva solo il nome del file
-        }
-
-        // Crea il nuovo record Doctor
-        Doctor::create($data);
-
-        // Reindirizza alla pagina di dettaglio del dottore
-        return redirect()->route('doctors.show', ['doctor' => $data['user_id']]);
+    // Gestisci l'upload dell'immagine
+    if ($request->hasFile('pic')) {
+        $file = $request->file('pic');
+        $filename = $file->store('public/images');
+        $data['pic'] = basename($filename);
     }
+
+    // Crea il dottore e salva le specializzazioni
+    $doctor = Doctor::create($data);
+
+    // Associa le specializzazioni
+    $doctor->specializations()->sync($data['specializations']);
+
+    // Rimuovi la specializzazione dalla sessione
+    $request->session()->forget('specialization');
+
+    // Reindirizza alla pagina del profilo dottore
+    return redirect()->route('doctors.show', $doctor->id);
+    }
+
 
     /**
      * Display the specified resource.

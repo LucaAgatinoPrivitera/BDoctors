@@ -57,13 +57,16 @@ class RegisteredUserController extends Controller
         'password' => Hash::make($request->password),
     ]);
 
+    // Salva la specializzazione nella sessione per usarla dopo
+    session(['specialization' => $request->specialization]);
+
     
 
     event(new Registered($user));
 
     Auth::login($user);
 
-    return redirect(route('dashboard'));
+    return redirect(route('doctors.create'));
 }
 
 }

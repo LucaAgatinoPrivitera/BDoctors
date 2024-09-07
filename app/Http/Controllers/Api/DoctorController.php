@@ -14,7 +14,7 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->get('perPage', 10); // Recupera 'perPage' con default a 10
+        $perPage = $request->get('perPage', 20); // Modificato a 20 dottori in una singola pagina per ora , da cambiare
         $page = $request->get('page', 1); // Recupera 'page' con default a 1
 
         // Recupera i medici con paginazione
