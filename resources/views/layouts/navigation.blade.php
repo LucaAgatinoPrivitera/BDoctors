@@ -21,10 +21,10 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.index')">
-                            {{ __('Doctors') }}
+                            {{ __('Dottori') }}
                         </x-nav-link>
                         <x-nav-link :href="route('reviews.index')" :active="request()->routeIs('reviews.index')">
-                            {{ __('Reviews') }}
+                            {{ __('Recensioni') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -47,7 +47,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.show')">
-                            {{ __('Profile') }}
+                            {{ __('Profilo') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -57,7 +57,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Esci') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>

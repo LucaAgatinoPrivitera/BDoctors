@@ -14,11 +14,17 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->get('perPage', 10); // Recupera 'perPage' con default a 10
-        $page = $request->get('page', 1); // Recupera 'page' con default a 1
+        $query = Doctor::with('specializations'); // Carica le specializzazioni insieme ai dottori
 
-        // Recupera i medici con paginazione
-        $doctors = Doctor::with('specializations')->paginate($perPage, ['*'], 'page', $page);
+        // Aggiungi eventuali filtri per specializzazioni
+        if ($request->has('specializations')) {
+            $selectedSpecializations = $request->input('specializations');
+            $query->whereHas('specializations', function ($q) use ($selectedSpecializations) {
+                $q->whereIn('name', $selectedSpecializations);
+            });
+        }
+
+        $doctors = $query->paginate(10); // Puoi cambiare il numero di risultati per pagina
 
         return response()->json($doctors);
     }
