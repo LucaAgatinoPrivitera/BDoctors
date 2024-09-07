@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $doctor)
+{{-- Prima era solo $doctor e metteva tutto sul titolo, occhio perché è pericolosa come cosa --}}
+@section('title', $doctor->surname)
 
 @section('content')
 	@if ($doctor)
