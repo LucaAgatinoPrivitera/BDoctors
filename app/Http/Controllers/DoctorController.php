@@ -14,7 +14,7 @@ class DoctorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
 
@@ -91,15 +91,10 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        // Carica la relazione user con il medico
-        $doctor = Doctor::with(['user', 'specializations'])->findOrFail($doctor->id);
+        // Carica le relazioni user e specializations
+        $doctor->load(['user', 'specializations']);
 
-        $data = [
-            "doctor" => $doctor
-        ];
-
-
-        return view("doctors.show", $data);
+        return view('doctors.show', ['doctor' => $doctor]);
     }
 
     /**

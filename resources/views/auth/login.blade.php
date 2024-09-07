@@ -1,6 +1,6 @@
 <x-guest-layout>
 
-	@section('title', 'Login')
+	@section('title', 'Accedi')
 	<!-- Session Status -->
 	<x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -30,7 +30,7 @@
 			<label for="remember_me" class="inline-flex items-center">
 				<input id="remember_me" type="checkbox"
 					class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-				<span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+				<span class="ms-2 text-sm text-gray-600">{{ __('Ricordami') }}</span>
 			</label>
 		</div>
 
@@ -40,7 +40,7 @@
 				<a
 					class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 					href="{{ route('password.request') }}">
-					{{ __('Forgot your password?') }}
+					{{ __('Hai dimentica la tua password?') }}
 				</a>
 			@endif
 
@@ -50,7 +50,7 @@
 
 		</div>
 		<div class="w-100 text-center mt-3">
-			<button><a class="btn btn-outline-primary w-100" href="{{ route('home') }}">Continua come Guest</a></button>
+			<button><a class="btn btn-outline-primary w-100" href="{{ route('home') }}">Continua come ospite</a></button>
 
 		</div>
 
