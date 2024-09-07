@@ -31,15 +31,19 @@ Route::get('/dashboard', function () {
 
 //Autenticato, rotte dei dottori, reviews, profili e sponsor
 Route::middleware('auth')->group(function () {
-    Route::resource('doctors', DoctorController::class);
+    // Route::resource('doctors', DoctorController::class);
+    Route::resource('doctors', DoctorController::class)->except(['show']);
+    // Aggiungi questa route per gestire lo show con lo slug
+    Route::get('doctors/{doctor:slug}', [DoctorController::class, 'show'])->name('doctors.show');
+
     Route::resource('reviews', ReviewController::class);
     Route::resource('sponsorships', SponsorshipController::class);
     Route::resource('specializations', SpecializationController::class);
     Route::resource('messages', MessageController::class);
     Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 
-   
-    
+
+
 
 
 
@@ -55,6 +59,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-
-
