@@ -51,13 +51,14 @@ class DoctorController extends Controller
     {
     // Validazione dei dati
     $data = $request->validate([
-        'surname' => 'required|string|max:255',
-        'address' => 'required|string|min:10|max:100',
+        'surname' => 'required|string|min:2|max:255',
+        'address' => 'required|string|min:5|max:100',
         'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
-        'bio' => 'nullable|string|max:500',
+        'bio' => 'required|string|max:500',
         'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'cv' => 'nullable|file',
         'specializations' => 'required|array|min:1',
+        'specializations.*' => 'integer|exists:specializations,id'
     ]);
 
     // Ottieni l'ID dell'utente autenticato
@@ -67,8 +68,8 @@ class DoctorController extends Controller
     // Gestisci l'upload dell'immagine
     if ($request->hasFile('pic')) {
         $file = $request->file('pic');
-        $filename = $file->store('public/images');
-        $data['pic'] = basename($filename);
+        $filename = $file->store('images', 'public'); // Usa 'images' invece di 'public/images'
+        $data['pic'] = basename($filename); // Salva solo il nome del file
     }
 
     // Crea il dottore e salva le specializzazioni
@@ -122,14 +123,6 @@ class DoctorController extends Controller
     {
         $data = $request->all();
 
-        // $project->name_project = $data["name_project"];
-        // $project->description = $data["description"];
-        // $project->date = $data["date"];
-        // $project->group = $data["group"];
-        // $project->save();
-
-        // $project->fill($data);
-        // $project->save();
 
         // Gestisci l'upload dell'immagine
         if ($request->hasFile('pic')) {
@@ -164,4 +157,6 @@ class DoctorController extends Controller
     {
         //
     }
+
+    
 }

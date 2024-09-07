@@ -9,8 +9,8 @@
                 <div class="row g-0">
                     <!-- Sezione Foto del dottore -->
                     <div class="col-md-4 bg-light rounded-start">
-                        <img src="{{ asset($doctor->pic) }}" alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}"
-                            class="img-fluid rounded-circle p-4">
+                        <img src="{{ asset('storage/images/' . $doctor->pic) }}" alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}"
+                           class="img-fluid rounded-circle p-4">
                     </div>
                     <!-- Sezione Informazioni del dottore -->
                     <div class="col-md-8">
@@ -51,7 +51,7 @@
                             @endif
 
                             <!-- Pulsante per modificare il profilo -->
-                            <a href="{{ route('profile.edit') }}" class="btn btn-warning mt-3 ms-2">Modifica Profilo</a>
+                            <a href="{{ route('doctors.edit',  $doctor->id) }}" class="btn btn-warning mt-3 ms-2">Modifica Profilo</a>
                         </div>
                     </div>
                 </div>
