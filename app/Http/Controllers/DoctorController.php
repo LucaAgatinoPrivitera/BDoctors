@@ -105,49 +105,70 @@ class DoctorController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Doctor $doctor)
-    {
-        $doctor = Doctor::with(['user', 'specializations'])->findOrFail($doctor->id);
+{
+    // Ottieni tutte le specializzazioni
+    $specializations = Specialization::all();
 
-        $data = [
-            "doctor" => $doctor
-        ];
+    // Trova il dottore con le specializzazioni
+    $doctor = Doctor::with('specializations')->findOrFail($doctor->id);
 
-        return view("doctors.edit", $data);
-    }
+    // Passa i dati alla vista
+    return view('doctors.edit', [
+        'doctor' => $doctor,
+        'specializations' => $specializations,
+    ]);
+}
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Doctor $doctor)
-    {
-        $data = $request->all();
+{
+    // Validazione dei dati
+    $data = $request->validate([
+        'name' => 'required|string|min:3|max:255',
+        'surname' => 'required|string|min:3|max:255',
+        'address' => 'required|string|min:6|max:255',
+        'phone' => 'required|numeric|min:9',
+        'bio' => 'required|string|min:15',
+        'pic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'specializations' => 'required|array',
+        'specializations.*' => 'exists:specializations,id',
+    ]);
 
+    // Aggiorna i dati dell'utente
+    $user = $doctor->user; // Assumendo che il modello Doctor ha una relazione "user"
+    $user->name = $request->input('name');
+    $user->save();
 
-        // Gestisci l'upload dell'immagine
-        if ($request->hasFile('pic')) {
-            // Elimina l'immagine precedente se esiste
-            if ($doctor->pic && Storage::disk('public')->exists('images/' . $doctor->pic)) {
-                Storage::disk('public')->delete('images/' . $doctor->pic);
-            }
-
-            $file = $request->file('pic');
-            $filename = $file->store('images', 'public');
-            $data['pic'] = basename($filename); // Salva solo il nome del file
-        } else {
-            // Mantieni il nome del file esistente se nessuna nuova immagine è stata fornita
-            $data['pic'] = $doctor->pic;
+    // Gestisci l'upload dell'immagine
+    if ($request->hasFile('pic')) {
+        // Elimina l'immagine precedente se esiste
+        if ($doctor->pic && Storage::disk('public')->exists('images/' . $doctor->pic)) {
+            Storage::disk('public')->delete('images/' . $doctor->pic);
         }
 
-
-
-        // Rimuovi `user_id` dai dati di aggiornamento, se non è necessario modificarlo
-        unset($data['user_id']);
-
-        // Aggiorna il dottore con i dati validati
-        $doctor->update($data);
-
-        return redirect()->route('doctors.show', $doctor->id);
+        $file = $request->file('pic');
+        $filename = $file->store('images', 'public');
+        $data['pic'] = basename($filename); // Salva solo il nome del file
+    } else {
+        // Mantieni il nome del file esistente se nessuna nuova immagine è stata fornita
+        $data['pic'] = $doctor->pic;
     }
+
+    // Rimuovi `user_id` dai dati di aggiornamento, se non è necessario modificarlo
+    unset($data['user_id']);
+
+    // Aggiorna i dati del medico
+    $doctor->update($data);
+
+     // Aggiorna le specializzazioni
+     $doctor->specializations()->sync($request->input('specializations'));
+
+    return redirect()->route('profile.show');
+}
+
 
     /**
      * Remove the specified resource from storage.

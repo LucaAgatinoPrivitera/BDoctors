@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Modifica il tuo profilo ' . $doctor->user->name)
+@section('title', 'Modifica il tuo profilo ')
 
 @section('content')
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1>Modifica: {{ $doctor->surname }}</h1>
 				@if ($errors->any())
 					<div class="alert alert-danger">
 						<ul>
@@ -54,6 +53,21 @@
 						<h3 class="form-label">Bio</h3>
 						<textarea type="text" class="form-control" name="bio" required>{{ $doctor->bio }}</textarea>
 					</div>
+
+					<div class="mb-3">
+                        <h3 class="form-label">Specializzazioni</h3>
+                        <select class="form-control" name="specializations[]" multiple>
+                            @foreach ($specializations as $specialization)
+                                <option value="{{ $specialization->id }}" 
+                                    {{ in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                    {{ $specialization->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('specializations')
+                            <div>{{ $message }}</div>
+                        @enderror
+                    </div>
 
 					<div class="form-group">
 						<label for="pic">Immagine</label>
