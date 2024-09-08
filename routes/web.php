@@ -32,7 +32,7 @@ Route::get('/dashboard', function () {
 //Autenticato, rotte dei dottori, reviews, profili e sponsor
 Route::middleware('auth')->group(function () {
     // Route::resource('doctors', DoctorController::class);
-    Route::resource('doctors', DoctorController::class)->except(['show']);
+    Route::resource('doctors', DoctorController::class);
     // Aggiungi questa route per gestire lo show con lo slug
     Route::get('doctors/{doctor:slug}', [DoctorController::class, 'show'])->name('doctors.show');
 

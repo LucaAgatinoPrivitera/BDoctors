@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DoctorController extends Controller
 {
@@ -65,6 +66,9 @@ class DoctorController extends Controller
     $userId = Auth::id();
     $data['user_id'] = $userId; // Associa l'utente al dottore
 
+    // Genera lo slug dal cognome del dottore
+    $data['slug'] = Str::slug($data['surname'], '-');
+
     // Gestisci l'upload dell'immagine
     if ($request->hasFile('pic')) {
         $file = $request->file('pic');
@@ -81,8 +85,8 @@ class DoctorController extends Controller
     // Rimuovi la specializzazione dalla sessione
     $request->session()->forget('specialization');
 
-    // Reindirizza alla pagina del profilo dottore
-    return redirect()->route('doctors.show', $doctor->id);
+    // Reindirizza alla pagina del profilo dottore usando lo slug
+    return redirect()->route('profile.show');
     }
 
 

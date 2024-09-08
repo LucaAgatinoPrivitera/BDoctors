@@ -14,8 +14,6 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->get('perPage', 20); // Modificato a 20 dottori in una singola pagina per ora , da cambiare
-        $page = $request->get('page', 1); // Recupera 'page' con default a 1
         $query = Doctor::with('specializations'); // Carica le specializzazioni insieme ai dottori
 
         // Aggiungi eventuali filtri per specializzazioni
@@ -26,7 +24,7 @@ class DoctorController extends Controller
             });
         }
 
-        $doctors = $query->paginate(10); // Puoi cambiare il numero di risultati per pagina
+        $doctors = $query->paginate(20); // Puoi cambiare il numero di risultati per pagina
 
         return response()->json($doctors);
     }
@@ -65,7 +63,7 @@ class DoctorController extends Controller
             }
         }
 
-        $doctors = $query->paginate(10);
+        $doctors = $query->paginate(15);
         return response()->json($doctors);
     }
 }
