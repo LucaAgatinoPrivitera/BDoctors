@@ -121,18 +121,18 @@ class ProfileController extends Controller
     /**
      * Display the form to edit the user's profile.
      */
-    public function edit(Request $request): View
-    {
-        $user = $request->user();
-        $doctor = Doctor::where('user_id', $user->id)->first();
-        $specializations = Specialization::all();
+    // public function edit(Request $request): View
+    // {
+    //     $user = $request->user();
+    //     $doctor = Doctor::where('user_id', $user->id)->first();
+    //     $specializations = Specialization::all();
 
-        return view('profile.edit', [
-            'user' => $user,
-            'doctor' => $doctor,
-            'specializations' => $specializations
-        ]);
-    }
+    //     return view('profile.edit', [
+    //         'user' => $user,
+    //         'doctor' => $doctor,
+    //         'specializations' => $specializations
+    //     ]);
+    // }
 
     /**
      * Update the user's profile in storage.
