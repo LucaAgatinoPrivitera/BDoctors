@@ -86,10 +86,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="name_reviewer" class="form-label">Type your name</label>
+                    <label for="name_reviewer" class="form-label">Digita il tuo nome</label>
                     <input type="text" name="name_reviewer" id="name_reviewer" class="form-control" placeholder="Name"
                         aria-describedby="nameHelp" value="{{ old('name_reviewer') }}" />
-                    <small id="nameHelp" class="text-muted">Inserisci il tuo nome</small>
+                    <small id="nameHelp" class="text-muted">Digita il tuo nome</small>
                     @error('name_reviewer')
                         <!-- Mostra errori di convalida per il campo name_reviewer -->
                         <div class="text-danger">{{ $message }}</div>
@@ -97,10 +97,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="email_reviewer" class="form-label">Type your Email</label>
+                    <label for="email_reviewer" class="form-label">Digita la tua email</label>
                     <input type="email" class="form-control" name="email_reviewer" id="email_reviewer"
                         aria-describedby="emailHelp" placeholder="abc@mail.com" value="{{ old('email_reviewer') }}" />
-                    <small id="emailHelp" class="form-text text-muted">Inserisci la tua email</small>
+                    <small id="emailHelp" class="form-text text-muted">Digita la tua email</small>
                     @error('email_reviewer')
                         <!-- Mostra errori di convalida per il campo email_reviewer -->
                         <div class="text-danger">{{ $message }}</div>
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
+                    <label for="message" class="form-label">Messaggio</label>
                     <textarea class="form-control" name="message" id="message" rows="3">{{ old('message') }}</textarea>
                     @error('message')
                         <!-- Mostra errori di convalida per il campo message -->
@@ -117,7 +117,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    Send message
+                    Invia Messaggio
                 </button>
             </form>
         </div>

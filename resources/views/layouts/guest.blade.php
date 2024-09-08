@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Titolo della pagina -->
-        <title>@yield('title', 'Login')</title>
+        <title>@yield('title', 'Accedi')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
