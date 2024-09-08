@@ -14,7 +14,7 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Doctor::with('specializations'); // Carica le specializzazioni insieme ai dottori
+        $query = Doctor::with('specializations', 'reviews'); // Carica le specializzazioni e le recensioni insieme ai dottori
 
         // Aggiungi eventuali filtri per specializzazioni
         if ($request->has('specializations')) {
@@ -24,7 +24,12 @@ class DoctorController extends Controller
             });
         }
 
-        $doctors = $query->paginate(20); // Puoi cambiare il numero di risultati per pagina
+        // Ordina i dottori per media delle recensioni, se richiesto
+        if ($request->has('sort_by') && $request->input('sort_by') == 'reviews') {
+            $query->withAvg('reviews', 'stars')->orderBy('reviews_avg_stars', 'desc');
+        }
+
+        $doctors = $query->paginate(20); // Cambia il numero di risultati per pagina come preferisci
 
         return response()->json($doctors);
     }
