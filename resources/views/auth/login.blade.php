@@ -1,13 +1,13 @@
 <x-guest-layout>
 
-	@section('title', 'Accedi')
+	@section('title', 'Login')
 	<!-- Session Status -->
 	<x-auth-session-status class="mb-4" :status="session('status')" />
 
 	<form method="POST" action="{{ route('login') }}">
 		@csrf
 
-		<!-- Email Address -->
+		<!-- Indirizzo Email -->
 		<div>
 			<x-input-label for="email" :value="__('Email')" />
 			<x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus
@@ -25,7 +25,7 @@
 			<x-input-error :messages="$errors->get('password')" class="mt-2" />
 		</div>
 
-		<!-- Remember Me -->
+		<!-- Ricordami -->
 		<div class="block mt-4">
 			<label for="remember_me" class="inline-flex items-center">
 				<input id="remember_me" type="checkbox"
@@ -40,17 +40,17 @@
 				<a
 					class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 					href="{{ route('password.request') }}">
-					{{ __('Hai dimentica la tua password?') }}
+					{{ __('Forgot your password?') }}
 				</a>
 			@endif
 
 			<x-primary-button class="ms-3">
-				{{ __('Log in') }}
+				{{ __('Accedi') }}
 			</x-primary-button>
 
 		</div>
 		<div class="w-100 text-center mt-3">
-			<button><a class="btn btn-outline-primary w-100" href="{{ route('home') }}">Continua come ospite</a></button>
+			<button><a class="btn btn-outline-primary w-100" href="{{ route('home') }}">Continua come Guest</a></button>
 
 		</div>
 

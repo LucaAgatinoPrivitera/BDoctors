@@ -1,17 +1,16 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+    <!-- Menu di Navigazione Principale -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
-                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Croce_bianca_e_rossa.svg" style="height: 40px" alt="">
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Link di Navigazione -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
@@ -30,7 +29,7 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Dropdown Impostazioni -->
             @if (Auth::check())
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -47,33 +46,33 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.show')">
-                            {{ __('Profilo') }}
+                            {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
+                        <!-- Autenticazione -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Esci') }}
+                                {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
             </div>
             @else
-            <!-- Display guest information -->
+            <!-- Informazioni per Ospiti -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <p class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white">
-                    Guest
+                    Ospite
                 </p>
                 <a class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white ms-4" href="{{ route('login') }}">
-                    Vuoi loggare?
+                    {{ __('Vuoi loggare?') }}
                 </a>
                 <a class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-gray-500 bg-white ms-4" href="{{ route('register') }}">
-                    Registrati
+                    {{ __('Registrati') }}
                 </a>
             </div>
             @endif
@@ -90,7 +89,7 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+    <!-- Menu di Navigazione Responsivo -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @if (Auth::check())
@@ -98,44 +97,44 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('doctors.index')" :active="request()->routeIs('doctors.index')">
-                    {{ __('Doctors') }}
+                    {{ __('Dottori') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('Home') }}
                 </x-responsive-nav-link>
                 <p class="mt-3 px-4 text-sm text-gray-500">
-                    Vuoi loggare?
+                    {{ __('Vuoi loggare?') }}
                 </p>
             @endif
         </div>
 
-        <!-- Responsive Settings Options -->
+        <!-- Opzioni di Impostazioni Responsivo -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
                 @if (Auth::check())
                     <div>{{ Auth::user()->name }}</div>
                     <div>{{ Auth::user()->email }}</div>
                 @else
-                    <div>Guest</div>
-                    <div>Vuoi loggare?</div>
+                    <div>Ospite</div>
+                    <div>{{ __('Vuoi loggare?') }}</div>
                 @endif
             </div>
 
             @if (Auth::check())
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profilo') }}
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
+                <!-- Autenticazione -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Disconnetti') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
@@ -143,3 +142,4 @@
         </div>
     </div>
 </nav>
+

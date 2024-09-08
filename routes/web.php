@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SpecializationController;
 
+
 // Modifica la rotta principale per reindirizzare alla pagina di registrazione
 Route::get('/', function () {
     return redirect()->route('register');
@@ -29,6 +30,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
+
+
 //Autenticato, rotte dei dottori, reviews, profili e sponsor
 Route::middleware('auth')->group(function () {
     // Route::resource('doctors', DoctorController::class);
@@ -42,10 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('messages', MessageController::class);
     Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 
+   
+    
 
-
-
-
+    
 
 
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -59,3 +64,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+
