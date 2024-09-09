@@ -7,6 +7,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SponsorshipController;
 use App\Models\Doctor;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SpecializationController;
 
 
@@ -31,6 +32,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/sponsorship/create', [PaymentController::class, 'createSponsorship'])->name('sponsorship.create'); // Per la creazione di sponsorizzazione con Braintree
+Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+Route::get('/payment/token', [PaymentController::class, 'getToken']);
+Route::post('/payment/process', [PaymentController::class, 'processPayment']);
+
+Route::get('/pay', [PaymentController::class, 'getToken'])->name('pay');
+// Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 
 
 
@@ -42,15 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::get('doctors/{doctor:slug}', [DoctorController::class, 'show'])->name('doctors.show');
 
     Route::resource('reviews', ReviewController::class);
-    Route::resource('sponsorships', SponsorshipController::class);
+    // Route::resource('sponsorships', SponsorshipController::class);
+    Route::resource('sponsorships', SponsorshipController::class)->except(['create', 'store']);
     Route::resource('specializations', SpecializationController::class);
     Route::resource('messages', MessageController::class);
     Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
-
-   
-    
-
-    
 
 
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -64,6 +68,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-
-

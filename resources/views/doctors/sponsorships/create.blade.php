@@ -1,34 +1,54 @@
-@extends('layouts.app')
-@section('title', 'Crea un nuovo tipo di sponsorizzazione')  <!-- Definisce il titolo della pagina -->
+@extends('layouts.pay') <!-- Assicurati che il layout sia corretto -->
+
 @section('content')
-<div class="container">
-    <h1>Crea tipo di sponsorizzazione</h1>
+	<div class="container">
+		<h1>Crea Sponsorizzazione</h1>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+		@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
 
-    <form action="{{ route('sponsorships.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-        </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="text" name="price" class="form-control" value="{{ old('price') }}">
-        </div>
-        <div class="form-group">
-            <label for="duration">Duration (days)</label>
-            <input type="text" name="duration" class="form-control" value="{{ old('duration') }}">
-        </div>
-        <button type="submit" class="btn btn-success mt-3">Create</button>
-    </form>
-</div>
+		<form id="payment-form" action="{{ route('checkout') }}" method="POST">
+			@csrf
+			<div id="dropin-container"></div>
+			<input type="hidden" name="payment_method_nonce" id="payment_method_nonce">
+			<button type="submit" class="btn btn-success mt-3">Paga</button>
+		</form>
+	</div>
+
+@section('script')
+	<script src="https://js.braintreegateway.com/web/dropin/1.26.0/js/dropin.min.js"></script>
+	<script>
+		var form = document.querySelector('#payment-form');
+		braintree.dropin.create({
+			authorization: "{{ $clientToken }}",
+			container: '#dropin-container'
+		}, function(createErr, instance) {
+			if (createErr) {
+				console.error(createErr);
+				return;
+			}
+
+			form.addEventListener('submit', function(event) {
+				event.preventDefault();
+
+				instance.requestPaymentMethod(function(err, payload) {
+					if (err) {
+						console.error(err);
+						return;
+					}
+
+					document.querySelector('#payment_method_nonce').value = payload.nonce;
+					form.submit();
+				});
+			});
+		});
+	</script>
+@endsection
 @endsection
