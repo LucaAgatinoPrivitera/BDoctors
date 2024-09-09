@@ -18,6 +18,14 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
+    'braintree' => [
+    'environment' => env('BRAINTREE_ENV'),
+    'merchant_id' => env('BRAINTREE_MERCHANT_ID'),
+    'public_key' => env('BRAINTREE_PUBLIC_KEY'),
+    'private_key' => env('BRAINTREE_PRIVATE_KEY'),
+    ],
+
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

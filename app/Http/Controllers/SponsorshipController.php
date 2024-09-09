@@ -13,10 +13,19 @@ class SponsorshipController extends Controller
         return view('doctors.sponsorships.index', compact('sponsorships'));
     }
 
+    public function chooseSponsorship()
+    {
+      $sponsorships = Sponsorship::all();
+      return view('sponsorships.choose', compact('sponsorships'));
+    }
+
+
     public function create()
     {
-        return view('doctors.sponsorships.create');
+      $sponsorships = Sponsorship::all(); // Recupera tutte le sponsorizzazioni
+    return view('doctors.sponsorships.create', compact('sponsorships')); // Passa le sponsorizzazioni alla vista
     }
+
 
     public function store(Request $request)
     {

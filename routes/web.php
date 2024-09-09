@@ -8,6 +8,7 @@ use App\Http\Controllers\SponsorshipController;
 use App\Models\Doctor;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SpecializationController;
+use App\Http\Controllers\BraintreeController;
 
 
 // Modifica la rotta principale per reindirizzare alla pagina di registrazione
@@ -49,7 +50,11 @@ Route::middleware('auth')->group(function () {
 
    
     
-
+    Route::get('payment', [BraintreeController::class, 'showPaymentForm'])->name('payment.form');
+    Route::post('payment', [BraintreeController::class, 'handlePayment'])->name('payment.handle');
+    Route::get('payment/success', function () {
+      return view('payment-success');
+    })->name('payment.success');
     
 
 

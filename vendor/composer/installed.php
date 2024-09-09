@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '99d71ff859cf42cbe42ab5a871d31c7932c2a12b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'braintree/braintree_php' => array(
+            'pretty_version' => '6.19.0',
+            'version' => '6.19.0.0',
+            'reference' => 'f3178632ca098d1f96a429d665aabc4e95346c03',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../braintree/braintree_php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'brianium/paratest' => array(
             'pretty_version' => 'v7.4.3',
             'version' => '7.4.3.0',
@@ -425,9 +434,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '99d71ff859cf42cbe42ab5a871d31c7932c2a12b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
