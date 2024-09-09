@@ -20,6 +20,7 @@
 			<input type="hidden" name="payment_method_nonce" id="payment_method_nonce">
 			<button type="submit" class="btn btn-success mt-3">Paga</button>
 		</form>
+
 	</div>
 
 @section('script')
@@ -36,7 +37,9 @@
 			}
 
 			form.addEventListener('submit', function(event) {
-				event.preventDefault();
+				console.log('Form submit event triggered');
+				event.preventDefault(); // Blocco del comportamento di default
+				console.log('Default action prevented');
 
 				instance.requestPaymentMethod(function(err, payload) {
 					if (err) {
@@ -44,11 +47,14 @@
 						return;
 					}
 
+					console.log('Nonce received:', payload.nonce);
 					document.querySelector('#payment_method_nonce').value = payload.nonce;
-					form.submit();
+					form.submit(); // Submit dopo aver ottenuto il nonce
 				});
 			});
+
 		});
 	</script>
 @endsection
+
 @endsection

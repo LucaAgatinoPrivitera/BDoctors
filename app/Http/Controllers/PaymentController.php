@@ -9,7 +9,7 @@ class PaymentController extends Controller
 {
     public function getToken()
     {
-        $gateway = new \Braintree\Gateway([
+        $gateway = new Gateway([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchant_id'),
             'publicKey' => config('services.braintree.public_key'),
@@ -28,7 +28,7 @@ class PaymentController extends Controller
 
     public function createSponsorship()
     {
-        $gateway = new \Braintree\Gateway([
+        $gateway = new Gateway([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchant_id'),
             'publicKey' => config('services.braintree.public_key'),
@@ -40,16 +40,13 @@ class PaymentController extends Controller
         return view('doctors.sponsorships.create', compact('clientToken'));
     }
 
-
-
-
     public function pay()
     {
         $gateway = new Gateway([
             'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey')
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
         ]);
 
         $clientToken = $gateway->clientToken()->generate();
@@ -61,9 +58,9 @@ class PaymentController extends Controller
     {
         $gateway = new Gateway([
             'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey')
+            'merchantId' => config('services.braintree.merchant_id'),
+            'publicKey' => config('services.braintree.public_key'),
+            'privateKey' => config('services.braintree.private_key')
         ]);
 
         $nonce = $request->payment_method_nonce;
