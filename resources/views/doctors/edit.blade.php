@@ -55,19 +55,19 @@
 					</div>
 
 					<div class="mb-3">
-                        <h3 class="form-label">Specializzazioni</h3>
-                        <select class="form-control" name="specializations[]" multiple>
-                            @foreach ($specializations as $specialization)
-                                <option value="{{ $specialization->id }}" 
-                                    {{ in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
-                                    {{ $specialization->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('specializations')
-                            <div>{{ $message }}</div>
-                        @enderror
-                    </div>
+						<h3 class="form-label">Specializzazioni</h3>
+						<select class="form-control" name="specializations[]" multiple>
+							@foreach ($specializations as $specialization)
+								<option value="{{ $specialization->id }}"
+									{{ in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
+									{{ $specialization->name }}
+								</option>
+							@endforeach
+						</select>
+						@error('specializations')
+							<div>{{ $message }}</div>
+						@enderror
+					</div>
 
 					<div class="form-group">
 						<label for="pic">Immagine</label>
@@ -78,6 +78,20 @@
 							</div>
 						@endif
 						<input class="btn" type="file" name="pic" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="cv">CV</label>
+						@if ($doctor->cv)
+							<div>
+								<a href="{{ Storage::url($doctor->cv) }}" target="_blank">Visualizza il CV attuale</a>
+								<p>CV attuale</p>
+							</div>
+						@endif
+						<input class="btn" type="file" name="cv" class="form-control">
+						@error('cv')
+							<div>{{ $message }}</div>
+						@enderror
 					</div>
 
 					<button type="submit" class="btn btn-primary">Submit</button>
