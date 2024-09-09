@@ -9,7 +9,7 @@ class PaymentController extends Controller
 {
     public function getToken()
     {
-        $gateway = new Gateway([
+        $gateway = new \Braintree\Gateway([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchant_id'),
             'publicKey' => config('services.braintree.public_key'),
@@ -20,6 +20,7 @@ class PaymentController extends Controller
 
         return view('payment', compact('clientToken'));
     }
+
 
     public function processPayment(Request $request)
     {
@@ -63,7 +64,7 @@ class PaymentController extends Controller
             'privateKey' => config('services.braintree.private_key')
         ]);
 
-        $nonce = $request->payment_method_nonce;
+        $nonce = $request->input('payment_method_nonce');
         $amount = '10.00'; // Esempio di importo
 
         $result = $gateway->transaction()->sale([
