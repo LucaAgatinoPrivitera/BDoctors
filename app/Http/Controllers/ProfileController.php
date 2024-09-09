@@ -23,7 +23,7 @@ class ProfileController extends Controller
                         ->where('user_id', $request->user()->id)
                         ->first();
         
-        return view('profile.show', compact('doctor'));
+        return view('profile.create', compact('doctor'));
     }
 
     /**
@@ -43,27 +43,23 @@ class ProfileController extends Controller
             'user' => $user,
             'specializations' => $specializations
         ]);
-
-        
-
-        
     }
 
-    public function edit()
-{
-    // Recupera l'utente autenticato
-    $user = auth()->user();
+    /**
+     * Show the form to edit the user's profile.
+     */
+    public function edit(Request $request): View
+    {
+        $user = $request->user();
+        $doctor = Doctor::where('user_id', $user->id)->first();
+        $specializations = Specialization::all();
 
-    // Trova il profilo del dottore associato all'utente autenticato
-    $doctor = Doctor::where('user_id', $user->id)->first();
-
-    // Recupera tutte le specializzazioni disponibili
-    $specializations = Specialization::all();
-
-    // Prepara i dati per la vista di modifica
-    return view('profile.edit', compact('doctor', 'specializations'));
-}
-
+        return view('profile.edit', [
+            'user' => $user,
+            'doctor' => $doctor,
+            'specializations' => $specializations
+        ]);
+    }
 
     /**
      * Store a newly created profile in storage.
@@ -93,13 +89,13 @@ class ProfileController extends Controller
         $doctor->phone = $validatedData['phone'];
         $doctor->bio = $validatedData['bio'];
         
-
         // Gestione del file immagine del profilo
         if ($request->hasFile('pic')) {
             $picPath = $request->file('pic')->store('pics', 'public');
             $doctor->pic = $picPath;
         }
 
+        // Gestione del file CV
         if ($request->hasFile('cv')) {
             $cvPath = $request->file('cv')->store('cvs', 'public');
             $doctor->cv = $cvPath;
@@ -119,22 +115,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Display the form to edit the user's profile.
-     */
-    // public function edit(Request $request): View
-    // {
-    //     $user = $request->user();
-    //     $doctor = Doctor::where('user_id', $user->id)->first();
-    //     $specializations = Specialization::all();
-
-    //     return view('profile.edit', [
-    //         'user' => $user,
-    //         'doctor' => $doctor,
-    //         'specializations' => $specializations
-    //     ]);
-    // }
-
-    /**
      * Update the user's profile in storage.
      */
     public function update(Request $request): RedirectResponse
@@ -152,87 +132,86 @@ class ProfileController extends Controller
             'cv' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-    $user = $request->user();
-    $user->fill($request->only(['name', 'surname', 'email']));
+        $user = $request->user();
+        $user->fill($request->only(['name', 'surname', 'email']));
 
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
-    
-    $user->save();
-
-    $doctor = Doctor::where('user_id', $user->id)->first();
-    
-    if ($doctor) {
-        // Aggiorna i dati del dottore
-        $doctor->address = $validatedData['address'];
-        $doctor->surname = $validatedData['surname'];
-        $doctor->phone = $validatedData['phone'];
-        $doctor->bio = $validatedData['bio'];
-
-        // Gestione del file immagine del profilo
-        if ($request->hasFile('pic')) {
-            // Elimina l'immagine precedente se esiste
-            if ($doctor->pic && Storage::disk('public')->exists('images/' . $doctor->pic)) {
-                Storage::disk('public')->delete('images/' . $doctor->pic);
-            }
-
-            $file = $request->file('pic');
-            $filename = $file->store('images', 'public');
-            $doctor->pic = basename($filename); // Salva solo il nome del file
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
-
-        // Gestione del file CV
-        if ($request->hasFile('cv')) {
-            // Elimina il CV precedente se esiste
-            if ($doctor->cv && Storage::disk('public')->exists('images/' . $doctor->cv)) {
-                Storage::disk('public')->delete('images/' . $doctor->cv);
-            }
-
-            $file = $request->file('cv');
-            $filename = $file->store('images', 'public');
-            $doctor->cv = basename($filename); // Salva solo il nome del file
-        } else {
-            // Imposta un valore di default per 'cv' se non è stato caricato un file
-            $doctor->cv = $doctor->cv ?: 'path/to/placeholder.pdf'; // Modifica secondo le tue esigenze
-        }
-
-        $doctor->save();
         
-        // Sync specializations
-        if (isset($validatedData['specializations'])) {
-            $doctor->specializations()->sync($validatedData['specializations']);
-        }
-    } else {
-        // Crea un nuovo profilo dottore se non esiste
-        $doctor = new Doctor();
-        $doctor->user_id = $user->id;
-        $doctor->address = $validatedData['address'];
-        $doctor->phone = $validatedData['phone'];
-        $doctor->bio = $validatedData['bio'];
+        $user->save();
 
-        if ($request->hasFile('pic')) {
-            $file = $request->file('pic');
-            $filename = $file->store('images', 'public');
-            $doctor->pic = basename($filename); // Salva solo il nome del file
+        $doctor = Doctor::where('user_id', $user->id)->first();
+        
+        if ($doctor) {
+            // Aggiorna i dati del dottore
+            $doctor->address = $validatedData['address'];
+            $doctor->surname = $validatedData['surname'];
+            $doctor->phone = $validatedData['phone'];
+            $doctor->bio = $validatedData['bio'];
+
+            // Gestione del file immagine del profilo
+            if ($request->hasFile('pic')) {
+                // Elimina l'immagine precedente se esiste
+                if ($doctor->pic && Storage::disk('public')->exists($doctor->pic)) {
+                    Storage::disk('public')->delete($doctor->pic);
+                }
+
+                $file = $request->file('pic');
+                $filename = $file->store('pics', 'public');
+                $doctor->pic = basename($filename); // Salva solo il nome del file
+            }
+
+            // Gestione del file CV
+            if ($request->hasFile('cv')) {
+                // Elimina il CV precedente se esiste
+                if ($doctor->cv && Storage::disk('public')->exists($doctor->cv)) {
+                    Storage::disk('public')->delete($doctor->cv);
+                }
+
+                $file = $request->file('cv');
+                $filename = $file->store('cvs', 'public');
+                $doctor->cv = basename($filename); // Salva solo il nome del file
+            } else {
+                // Imposta un valore di default per 'cv' se non è stato caricato un file
+                $doctor->cv = $doctor->cv ?: 'path/to/placeholder.pdf'; // Modifica secondo le tue esigenze
+            }
+
+            $doctor->save();
+            
+            // Sync specializations
+            if (isset($validatedData['specializations'])) {
+                $doctor->specializations()->sync($validatedData['specializations']);
+            }
+        } else {
+            // Crea un nuovo profilo dottore se non esiste
+            $doctor = new Doctor();
+            $doctor->user_id = $user->id;
+            $doctor->address = $validatedData['address'];
+            $doctor->phone = $validatedData['phone'];
+            $doctor->bio = $validatedData['bio'];
+
+            if ($request->hasFile('pic')) {
+                $file = $request->file('pic');
+                $filename = $file->store('pics', 'public');
+                $doctor->pic = basename($filename); // Salva solo il nome del file
+            }
+
+            if ($request->hasFile('cv')) {
+                $file = $request->file('cv');
+                $filename = $file->store('cvs', 'public');
+                $doctor->cv = basename($filename); // Salva solo il nome del file
+            }
+
+            $doctor->save();
+
+            if (isset($validatedData['specializations'])) {
+                $doctor->specializations()->sync($validatedData['specializations']);
+            }
         }
 
-        if ($request->hasFile('cv')) {
-            $file = $request->file('cv');
-            $filename = $file->store('images', 'public');
-            $doctor->cv = basename($filename); // Salva solo il nome del file
-        }
-
-        $doctor->save();
-
-        if (isset($validatedData['specializations'])) {
-            $doctor->specializations()->sync($validatedData['specializations']);
-        }
+        return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
-
-    return Redirect::route('profile.show')->with('status', 'profile-updated');
-}
-
 
     /**
      * Delete the user's account.
@@ -254,11 +233,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
-
-    
-
-    
-
-    
 }

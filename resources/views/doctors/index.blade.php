@@ -56,7 +56,7 @@
                         @endif
                     </td>
                     <td class="text-center align-middle">
-                        <a class="btn btn-success btn-sm" href="{{ route('doctors.show', ['doctor' => $doctor->id]) }}">Show</a>
+                        <a class="btn btn-success btn-sm" href="{{ route('doctors.show', ['doctor' => $doctor->id]) }}">Mostra</a>
                     </td>
                 </tr>
             @endforeach
