@@ -14,25 +14,63 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Doctor::with('specializations', 'reviews'); // Carica le specializzazioni e le recensioni insieme ai dottori
+        $query = Doctor::with('specializations', 'reviews', 'sponsorships');
 
-        // Aggiungi eventuali filtri per specializzazioni
+        // Aggiungi filtri basati su parametri di ricerca
         if ($request->has('specializations')) {
-            $selectedSpecializations = $request->input('specializations');
-            $query->whereHas('specializations', function ($q) use ($selectedSpecializations) {
-                $q->whereIn('name', $selectedSpecializations);
+            $specializations = $request->input('specializations');
+            $query->whereHas('specializations', function ($q) use ($specializations) {
+                $q->whereIn('name', $specializations);
             });
         }
 
-        // Ordina i dottori per media delle recensioni, se richiesto
-        if ($request->has('sort_by') && $request->input('sort_by') == 'reviews') {
-            $query->withAvg('reviews', 'stars')->orderBy('reviews_avg_stars', 'desc');
-        }
+        // Recupera i medici sponsorizzati con sponsorizzazione attiva
+        $sponsoredDoctors = $query->join('doctor_sponsorship', 'doctors.id', '=', 'doctor_sponsorship.doctor_id')
+            ->join('sponsorships', 'doctor_sponsorship.sponsorship_id', '=', 'sponsorships.id')
+            ->whereDate('doctor_sponsorship.date_end', '>=', now())
+            ->select('doctors.*', 'doctor_sponsorship.sponsorship_id')
+            ->orderByRaw("FIELD(doctor_sponsorship.sponsorship_id, 4, 3, 2, 1)") // Ordina per ID sponsorizzazione specificato
+            ->distinct()
+            ->get();
 
-        $doctors = $query->paginate(20); // Cambia il numero di risultati per pagina come preferisci
+        // Recupera i medici non sponsorizzati (senza sponsorizzazioni attive)
+        $unsponsoredDoctors = $query->whereDoesntHave('sponsorships', function ($q) {
+            $q->whereDate('date_end', '>=', now());
+        })->get();
+
+        // Unisci i medici sponsorizzati e non sponsorizzati
+        $doctors = $sponsoredDoctors->merge($unsponsoredDoctors);
 
         return response()->json($doctors);
     }
+
+    public function getDoctors(Request $request)
+    {
+        // Recupera i medici sponsorizzati con sponsorizzazione attiva
+        $sponsoredDoctors = Doctor::with('specializations', 'reviews', 'sponsorships')
+            ->join('doctor_sponsorship', 'doctors.id', '=', 'doctor_sponsorship.doctor_id')
+            ->join('sponsorships', 'doctor_sponsorship.sponsorship_id', '=', 'sponsorships.id')
+            ->whereDate('doctor_sponsorship.date_end', '>=', now())
+            ->select('doctors.*', 'doctor_sponsorship.sponsorship_id')
+            ->orderByRaw("FIELD(doctor_sponsorship.sponsorship_id, 4, 3, 2, 1)") // Ordina per ID sponsorizzazione specificato
+            ->distinct()
+            ->get();
+
+        // Recupera i medici non sponsorizzati (senza sponsorizzazioni attive)
+        $unsponsoredDoctors = Doctor::with('specializations', 'reviews')
+            ->whereDoesntHave('sponsorships', function ($query) {
+                $query->whereDate('date_end', '>=', now());
+            })
+            ->get();
+
+        // Unisci i medici sponsorizzati e non sponsorizzati
+        $doctors = $sponsoredDoctors->merge($unsponsoredDoctors);
+
+        return response()->json($doctors);
+    }
+
+
+
 
     /**
      * Display the specified resource.
@@ -50,7 +88,7 @@ class DoctorController extends Controller
     }
 
 
-    public function getDoctors(Request $request)
+    /*public function getDoctors(Request $request)
     {
         $query = Doctor::query();
 
@@ -70,5 +108,5 @@ class DoctorController extends Controller
 
         $doctors = $query->paginate(15);
         return response()->json($doctors);
-    }
+    }*/
 }
