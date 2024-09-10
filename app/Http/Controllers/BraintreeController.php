@@ -44,7 +44,7 @@ class BraintreeController extends Controller
         ]);
 
         if ($result->success) {
-            return redirect()->route('payment.success')->with('success', 'Pagamento completato con successo!');
+            return redirect()->route('sponsorships.create')->with('success', 'Pagamento completato con successo!');
         } else {
             return redirect()->back()->withErrors(['error' => $result->message]);
         }
