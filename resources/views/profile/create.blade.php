@@ -41,17 +41,6 @@
                 <form id="profileForm" method="POST" action="{{ route('profile.store') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="row">
-                        <!-- Nome dell'utente -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <label for="name" class="form-label">Nome</label>
-                            <input type="text" id="name" name="name" class="form-control"
-                                value="{{ old('name') }}" required minlength="3">
-                            @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- Cognome dell'utente -->
                         <div class="col-12 col-md-6 mb-3">
                             <label for="surname" class="form-label">Cognome</label>
