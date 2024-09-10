@@ -17,53 +17,120 @@ class SponsorshipController extends Controller
 
     public function chooseSponsorship()
     {
-      $sponsorships = Sponsorship::all();
-      return view('sponsorships.choose', compact('sponsorships'));
+        $sponsorships = Sponsorship::all();
+        return view('sponsorships.choose', compact('sponsorships'));
     }
 
 
     public function create()
-{
-    // Recupera tutte le sponsorizzazioni
-    $sponsorships = Sponsorship::all();
+    {
+        // Recupera tutte le sponsorizzazioni
+        $sponsorships = Sponsorship::all();
 
-    // Recupera il medico associato all'utente loggato
-    $doctor = Doctor::where('user_id', Auth::id())->firstOrFail();
+        // Recupera il medico associato all'utente loggato
+        $doctor = Doctor::where('user_id', Auth::id())->firstOrFail();
 
-    // Passa le sponsorizzazioni e il medico alla vista
-    return view('doctors.sponsorships.create', compact('sponsorships', 'doctor'));
-}
+        // Passa le sponsorizzazioni e il medico alla vista
+        return view('doctors.sponsorships.create', compact('sponsorships', 'doctor'));
+    }
 
+    // Se da errori rimettiamo
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'sponsorship_id' => 'required|exists:sponsorships,id',
+    //         'doctor_id' => 'required|exists:doctors,id',
+    //     ]);
+
+    //     // Recupera la sponsorizzazione selezionata
+    //     $sponsorship = Sponsorship::findOrFail($request->sponsorship_id);
+
+    //     // Calcola date di inizio e fine
+    //     $date_start = now();
+
+    //     // Assicurati che 'duration' sia un intero
+    //     $duration = (int) $sponsorship->duration;
+
+    //     $date_end = $date_start->copy()->addDays($duration);
+
+    //     // Inserisci nella tabella pivot
+    //     $sponsorship->doctors()->attach($request->doctor_id, [
+    //         'name' => $sponsorship->name,
+    //         'price' => $sponsorship->price,
+    //         'date_start' => $date_start,
+    //         'date_end' => $date_end,
+    //     ]);
+
+    //     return redirect()->route('payment.form',  ['amount' => $sponsorship->price])
+    //         ->with('Successo', 'Sponsorizzazione associata. Procedere con il pagamento');
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     // Imposta il valore predefinito per sponsorship_id
+    //     $sponsorshipId = $request->input('sponsorship_id', 1); // Usa 1 come valore predefinito
+
+    //     // Valida i dati della richiesta
+    //     $request->validate([
+    //         'doctor_id' => 'required|exists:doctors,id',
+    //     ]);
+
+    //     // Recupera la sponsorizzazione selezionata
+    //     $sponsorship = Sponsorship::findOrFail($sponsorshipId);
+
+    //     // Calcola date di inizio e fine
+    //     $date_start = now();
+
+    //     // Assicurati che 'duration' sia un intero
+    //     $duration = (int) $sponsorship->duration;
+
+    //     $date_end = $date_start->copy()->addDays($duration);
+
+    //     // Inserisci nella tabella pivot
+    //     $sponsorship->doctors()->attach($request->doctor_id, [
+    //         'name' => $sponsorship->name,
+    //         'price' => $sponsorship->price,
+    //         'date_start' => $date_start,
+    //         'date_end' => $date_end,
+    //     ]);
+
+    //     return redirect()->route('payment.form', ['amount' => $sponsorship->price])
+    //         ->with('Successo', 'Sponsorizzazione associata. Procedere con il pagamento');
+    // }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'sponsorship_id' => 'required|exists:sponsorships,id',
-        'doctor_id' => 'required|exists:doctors,id',
-    ]);
+    {
+        // Imposta il valore predefinito per sponsorship_id come 1
+        $sponsorshipId = 1;
 
-    // Recupera la sponsorizzazione selezionata
-    $sponsorship = Sponsorship::findOrFail($request->sponsorship_id);
+        // Valida i dati della richiesta
+        $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+        ]);
 
-    // Calcola date di inizio e fine
-    $date_start = now();
+        // Recupera la sponsorizzazione con ID 1
+        $sponsorship = Sponsorship::findOrFail($sponsorshipId);
 
-     // Assicurati che 'duration' sia un intero
-    $duration = (int) $sponsorship->duration;
+        // Calcola date di inizio e fine
+        $date_start = now();
 
-    $date_end = $date_start->copy()->addDays($duration);
+        // Assicurati che 'duration' sia un intero
+        $duration = (int) $sponsorship->duration;
 
-    // Inserisci nella tabella pivot
-    $sponsorship->doctors()->attach($request->doctor_id, [
-        'name' => $sponsorship->name,
-        'price' => $sponsorship->price,
-        'date_start' => $date_start,
-        'date_end' => $date_end,
-    ]);
+        $date_end = $date_start->copy()->addDays($duration);
 
-    return redirect()->route('payment.form',  ['amount' => $sponsorship->price])
-      ->with('Successo', 'Sponsorizzazione associata. Procedere con il pagamento');
-}
+        // Inserisci nella tabella pivot
+        $sponsorship->doctors()->attach($request->doctor_id, [
+            'name' => $sponsorship->name,
+            'price' => $sponsorship->price,
+            'date_start' => $date_start,
+            'date_end' => $date_end,
+        ]);
+
+        return redirect()->route('payment.form', ['amount' => $sponsorship->price])
+            ->with('Successo', 'Sponsorizzazione associata. Procedere con il pagamento');
+    }
+
 
     public function show(Sponsorship $sponsorship)
     {
