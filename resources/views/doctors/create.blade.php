@@ -52,22 +52,12 @@
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Nome dell'utente -->
-                <div>
-                    <label for="name" class="form-label block text-gray-700 font-semibold mb-2">Nome</label>
-                    <input type="text" id="name" name="name" class="form-control block w-full px-4 py-2 border rounded-md"
-                           value="{{ old('name') }}" required minlength="3">
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <!-- Cognome dell'utente -->
-                <div>
+                <div class="col-span-2">
                     <label for="surname" class="form-label block text-gray-700 font-semibold mb-2">Cognome</label>
-                    <input type="text" id="surname" name="surname" class="form-control block w-full px-4 py-2 border rounded-md"
-                           value="{{ old('surname') }}" required minlength="3">
-                    @error('surname')
+                    <input type="text" id="address" name="address" class="form-control block w-full px-4 py-2 border rounded-md"
+                           value="{{ old('address') }}" required>
+                    @error('address')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -132,4 +122,3 @@
         </form>
     </div>
 @endsection
-
