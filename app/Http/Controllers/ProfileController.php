@@ -24,7 +24,7 @@ class ProfileController extends Controller
             ->where('user_id', $request->user()->id)
             ->first();
 
-        return view('profile.create', compact('doctor'));
+        return view('profile.show', compact('doctor'));
     }
 
     /**
