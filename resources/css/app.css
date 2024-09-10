@@ -44,3 +44,19 @@
 .btn-primary:hover {
     background-color: #45a049;
 }
+
+.card-basic {
+    background-color: #f8f9fa;
+    border-color: #222;
+}
+
+.card-premium {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.card-gold {
+    background-color: #ffd700;
+    color: #000;
+}
+

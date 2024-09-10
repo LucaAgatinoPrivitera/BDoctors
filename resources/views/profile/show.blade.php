@@ -43,6 +43,7 @@
                                 </div>
                             @else
                                 <p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
+                                <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Sponsorizza il Profilo</a>
                             @endif
 
                             <!-- Curriculum Vitae -->
