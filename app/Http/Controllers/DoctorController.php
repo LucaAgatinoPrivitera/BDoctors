@@ -136,6 +136,9 @@ class DoctorController extends Controller
         'specializations' => 'required|array',
         'specializations.*' => 'exists:specializations,id',
     ]);
+    
+    // Genera lo slug dal cognome del dottore
+    $data['slug'] = Str::slug($request->input('surname'), '-');
 
     // Aggiorna i dati dell'utente
     $user = $doctor->user; // Assumendo che il modello Doctor ha una relazione "user"
