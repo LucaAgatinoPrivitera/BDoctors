@@ -11,8 +11,8 @@
     <form id="payment-form" action="{{ route('payment.handle') }}" method="POST">
         @csrf
         <!-- Campo per l'importo -->
-        <label for="amount">Importo:</label>
-        <input type="number" id="amount" name="amount" value="99.99" min="1" step="0.01" required>
+    <label for="amount">Importo:</label>
+    <input type="number" id="amount" name="amount" value="{{ $amount }}" min="1" step="0.01" required readonly>
         
         <!-- Braintree Drop-in container -->
         <div id="dropin-container"></div>

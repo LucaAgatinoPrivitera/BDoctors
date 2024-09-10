@@ -19,32 +19,33 @@ class BraintreeController extends Controller
         ]);
     }
 
-    public function showPaymentForm()
+    public function showPaymentForm(Request $request)
     {
         $token = $this->braintree->ClientToken()->generate();
-        return view('payment', ['token' => $token]);
+        $amount = $request->query('amount'); // Recupera l'importo dal parametro di query
+        return view('payment', ['token' => $token, 'amount' => $amount]);
     }
 
     public function handlePayment(Request $request)
     {
-    // Validazione dell'importo e del nonce
-    $this->validate($request, [
-        'amount' => 'required|numeric|min:0.01',
-        'payment_method_nonce' => 'required|string',
-    ]);
+        // Validazione dell'importo e del nonce
+        $this->validate($request, [
+          'amount' => 'required|numeric|min:0.01',
+          'payment_method_nonce' => 'required|string',
+        ]);
 
-    try {
-        // Esegui la transazione con Braintree
-        $result = $this->braintree->transaction()->sale([
+        try {
+          // Esegui la transazione con Braintree
+          $result = $this->braintree->transaction()->sale([
             'amount' => $request->input('amount'), // Usa l'importo dal form
             'paymentMethodNonce' => $request->input('payment_method_nonce'),
             'options' => [
                 'submitForSettlement' => true
             ]
-        ]);
+          ]);
 
         if ($result->success) {
-            return redirect()->route('sponsorships.create')->with('success', 'Pagamento completato con successo!');
+            return redirect()->route('profile.show')->with('success', 'Pagamento completato con successo!');
         } else {
             return redirect()->back()->withErrors(['error' => $result->message]);
         }

@@ -61,7 +61,8 @@ class SponsorshipController extends Controller
         'date_end' => $date_end,
     ]);
 
-    return redirect()->route('sponsorships.index')->with('success', 'Sponsorship associated successfully.');
+    return redirect()->route('payment.form',  ['amount' => $sponsorship->price])
+      ->with('Successo', 'Sponsorizzazione associata. Procedere con il pagamento');
 }
 
     public function show(Sponsorship $sponsorship)
