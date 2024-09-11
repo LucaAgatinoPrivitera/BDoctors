@@ -20,7 +20,7 @@ class Doctor extends Model
         'slug',
         'user_id',
         'user_name',
-        'slug'
+        
     ];
 
     public function reviews()

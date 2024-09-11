@@ -12,6 +12,7 @@ class ReviewController extends Controller
         $request->validate([
             'name_reviewer' => 'required|string|max:255',
             'stars' => 'required|integer|between:1,5',
+            'email_reviewer' => 'required|string|max:40',
             'review_text' => 'required|string',
             'doctor_id' => 'required|exists:doctors,id',  // Mantieni comunque il riferimento al medico se necessario
         ]);
@@ -19,6 +20,7 @@ class ReviewController extends Controller
         $review = Review::create([
         'doctor_id' => $request->doctor_id,
         'name_reviewer' => $request->name_reviewer,
+        'email_reviewer' => $request->email_reviewer,
         'stars' => $request->stars,
         'review_text' => $request->review_text,
         ]);
