@@ -63,14 +63,16 @@
         <div class="container mt-5">
             <h3>Recensioni</h3>
             @if($doctor->reviews->isNotEmpty())
-                <ul class="list-group">
-                    @foreach($doctor->reviews as $review)
-                        <li class="list-group-item">
-                            <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }}:</strong> {{ $review->review_text }}
-                            <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
-                        </li>
-                    @endforeach
-                </ul>
+            <ul class="list-group">
+                @foreach($doctor->reviews->sortByDesc('created_at')->take(3) as $review)
+                    <li class="list-group-item">
+                        <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }} ({{ $review->email_reviewer }}):</strong>
+                        <p class="mb-0">{{ $review->review_text }}</p>
+                        <p class="text-muted mb-0">{{ $review->created_at->format('d/m/Y H:i') }}</p>
+                        <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
+                    </li>
+                @endforeach
+            </ul>
             @else
                 <p class="text-muted">Nessuna recensione ancora.</p>
             @endif
