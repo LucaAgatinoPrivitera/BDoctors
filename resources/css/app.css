@@ -60,3 +60,43 @@
     color: #000;
 }
 
+/* Titolo della Sezione */
+.section-title {
+    background-color: #f7c600; 
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    max-width: 15rem;
+}
+
+/* Sezione Recensioni */
+.review-list {
+    background-color: #d4edda; 
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.review-item {
+    background-color: #ffffff; 
+    border: 1px solid #c3e6cb; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Sezione Messaggi */
+.message-list {
+    background-color: #d1ecf1; 
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.message-item {
+    background-color: #ffffff; 
+    border: 1px solid #bee5eb; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
