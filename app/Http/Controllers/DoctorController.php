@@ -47,9 +47,9 @@ class DoctorController extends Controller
         $specializations = specialization::all(); // Recupera tutte le specializzazioni dal database
 
         $selectedSpecialization = session('specialization');
-        
 
-        return view('doctors.create', compact('specializations','selectedSpecialization')); // Passa le specializzazioni alla vista
+
+        return view('doctors.create', compact('specializations', 'selectedSpecialization')); // Passa le specializzazioni alla vista
         $doctor->specializations = $doctor->specializations ?: collect();
     }
 
