@@ -61,7 +61,7 @@
 
         <!-- Sezione Recensioni -->
         <div class="container mt-5">
-            <h3>Recensioni</h3>
+            <h3>Ultime Recensioni rivevute</h3>
             @if($doctor->reviews->isNotEmpty())
             <ul class="list-group">
                 @foreach($doctor->reviews->sortByDesc('created_at')->take(3) as $review)
@@ -80,16 +80,17 @@
 
         <!-- Sezione Messaggi -->
         <div class="container mt-5">
-            <h3>Messaggi Ricevuti</h3>
+            <h3>Ultimi Messaggi Ricevuti</h3>
             @if($doctor->messages->isNotEmpty())
-                <ul class="list-group">
-                    @foreach($doctor->messages as $message)
-                        <li class="list-group-item">
-                            <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
-                            <p class="mb-0">{{ $message->message }}</p>
-                        </li>
-                    @endforeach
-                </ul>
+            <ul class="list-group">
+                @foreach($doctor->messages->sortByDesc('id')->take(3) as $message)
+                    <li class="list-group-item">
+                        <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
+                        <p class="mb-0">{{ $message->message }}</p>
+                    </li>
+                @endforeach
+            </ul>
+            
             @else
                 <p class="text-muted">Nessun messaggio ricevuto.</p>
             @endif
