@@ -3,8 +3,8 @@
 @section('title', $doctor->user->name . ' ' . $doctor->surname)
 
 @section('content')
-    
-        <div class="container mt-5">
+    <div class="wrapper pt-3 pb-4">
+        <div class="container">
             <div class="card shadow-lg border-0 rounded-lg">
                 <div class="row g-0">
                     <!-- Sezione Foto del dottore -->
@@ -62,7 +62,7 @@
         <div class="container mt-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="section-title">Ultime Recensioni Ricevute</h2>
-                <a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-secondary">Visualizza Tutte le Recensioni</a>
+                <a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-all">Visualizza Tutte le Recensioni</a>
             </div>
             @if($doctor->reviews->isNotEmpty())
             <ul class="list-group review-list">
@@ -84,7 +84,7 @@
         <div class="container mt-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="section-title">Ultimi Messaggi Ricevuti</h2>
-                <a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-secondary">Visualizza Tutti i Messaggi</a>
+                <a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-all">Visualizza Tutti i Messaggi</a>
             </div>
             @if($doctor->messages->isNotEmpty())
             <ul class="list-group message-list">
@@ -99,7 +99,7 @@
                 <p class="text-muted">Nessun messaggio ricevuto.</p>
             @endif
         </div>
-        
+    </div>   
 @endsection
 
 
