@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::get('payment/success', function () {
       return view('payment-success');
     })->name('payment.success');
+
+    // Rotta per visualizzare tutte le recensioni di un medico
+    Route::get('doctors/{doctor}/reviews', [DoctorController::class, 'showReviews'])->name('doctors.reviews');
+    // Rotta per visualizzare tutti i messaggi di un medico
+    Route::get('doctors/{doctor}/messages', [DoctorController::class, 'showMessages'])->name('doctors.messages');
     
 
 

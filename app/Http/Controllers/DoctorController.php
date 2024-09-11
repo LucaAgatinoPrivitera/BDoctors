@@ -12,22 +12,36 @@ use Illuminate\Support\Str;
 
 class DoctorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
+    // Funzione per vedere tutte le recensioni di un medico
+    public function showReviews($id)
+    {
+      $doctor = Doctor::with(['reviews' => function($query) {
+        $query->orderBy('created_at', 'desc');
+      }])->findOrFail($id);
+    
+      return view('doctors.reviews', compact('doctor'));
+    }
+     
+    // Funzione per vedere tutti i messaggi di un medico
+    public function showMessages($id)
+    {
+      $doctor = Doctor::with(['messages' => function($query) {
+        $query->orderBy('id', 'desc');
+      }])->findOrFail($id);
+    
+      return view('doctors.messages', compact('doctor'));
+    }
 
+    
     public function index()
     {
-
         $doctors = Doctor::with('user', 'specializations')->get();
         // Passa i dati alla vista
         return view('doctors.index', compact('doctors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    // Nel tuo DoctorController
+    
     public function create()
     {
         $specializations = specialization::all(); // Recupera tutte le specializzazioni dal database
@@ -39,19 +53,20 @@ class DoctorController extends Controller
         $doctor->specializations = $doctor->specializations ?: collect();
     }
 
+
+
     public function getSpecializationsAttribute($value)
     {
         return $value ? collect($value) : collect();
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
+
     public function store(Request $request)
     {
-    // Validazione dei dati
-    $data = $request->validate([
+      // Validazione dei dati
+      $data = $request->validate([
         'surname' => 'required|string|min:2|max:255',
         'address' => 'required|string|min:5|max:100',
         'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
@@ -60,39 +75,38 @@ class DoctorController extends Controller
         'cv' => 'nullable|file',
         'specializations' => 'required|array|min:1',
         'specializations.*' => 'integer|exists:specializations,id'
-    ]);
+      ]);
 
-    // Ottieni l'ID dell'utente autenticato
-    $userId = Auth::id();
-    $data['user_id'] = $userId; // Associa l'utente al dottore
+      // Ottieni l'ID dell'utente autenticato
+      $userId = Auth::id();
+      $data['user_id'] = $userId; // Associa l'utente al dottore
 
-    // Genera lo slug dal cognome del dottore
-    $data['slug'] = Str::slug($data['surname'], '-');
+      // Genera lo slug dal cognome del dottore
+      $data['slug'] = Str::slug($data['surname'], '-');
 
-    // Gestisci l'upload dell'immagine
-    if ($request->hasFile('pic')) {
+      // Gestisci l'upload dell'immagine
+      if ($request->hasFile('pic')) {
         $file = $request->file('pic');
         $filename = $file->store('images', 'public'); // Usa 'images' invece di 'public/images'
         $data['pic'] = basename($filename); // Salva solo il nome del file
+      }  
+
+      // Crea il dottore e salva le specializzazioni
+      $doctor = Doctor::create($data);
+
+      // Associa le specializzazioni
+      $doctor->specializations()->sync($data['specializations']);
+
+      // Rimuovi la specializzazione dalla sessione
+      $request->session()->forget('specialization');
+
+      // Reindirizza alla pagina del profilo dottore usando lo slug
+      return redirect()->route('profile.show');
     }
 
-    // Crea il dottore e salva le specializzazioni
-    $doctor = Doctor::create($data);
 
-    // Associa le specializzazioni
-    $doctor->specializations()->sync($data['specializations']);
+    
 
-    // Rimuovi la specializzazione dalla sessione
-    $request->session()->forget('specialization');
-
-    // Reindirizza alla pagina del profilo dottore usando lo slug
-    return redirect()->route('profile.show');
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Doctor $doctor)
     {
         // Carica le relazioni user e specializations
@@ -101,32 +115,31 @@ class DoctorController extends Controller
         return view('doctors.show', ['doctor' => $doctor]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
+
+
     public function edit(Doctor $doctor)
-{
-    // Ottieni tutte le specializzazioni
-    $specializations = Specialization::all();
+    {
+      // Ottieni tutte le specializzazioni
+      $specializations = Specialization::all();
 
-    // Trova il dottore con le specializzazioni
-    $doctor = Doctor::with('specializations')->findOrFail($doctor->id);
+      // Trova il dottore con le specializzazioni
+      $doctor = Doctor::with('specializations')->findOrFail($doctor->id);
 
-    // Passa i dati alla vista
-    return view('doctors.edit', [
+      // Passa i dati alla vista
+      return view('doctors.edit', [
         'doctor' => $doctor,
         'specializations' => $specializations,
-    ]);
-}
+      ]);
+    }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+    
     public function update(Request $request, Doctor $doctor)
-{
-    // Validazione dei dati
-    $data = $request->validate([
+    {
+      // Validazione dei dati
+      $data = $request->validate([
         'name' => 'required|string|min:3|max:255',
         'surname' => 'required|string|min:3|max:255',
         'address' => 'required|string|min:6|max:255',
@@ -135,18 +148,18 @@ class DoctorController extends Controller
         'pic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         'specializations' => 'required|array',
         'specializations.*' => 'exists:specializations,id',
-    ]);
+      ]);
     
-    // Genera lo slug dal cognome del dottore
-    $data['slug'] = Str::slug($request->input('surname'), '-');
+      // Genera lo slug dal cognome del dottore
+      $data['slug'] = Str::slug($request->input('surname'), '-');
 
-    // Aggiorna i dati dell'utente
-    $user = $doctor->user; // Assumendo che il modello Doctor ha una relazione "user"
-    $user->name = $request->input('name');
-    $user->save();
+      // Aggiorna i dati dell'utente
+      $user = $doctor->user; // Assumendo che il modello Doctor ha una relazione "user"
+      $user->name = $request->input('name');
+      $user->save();
 
-    // Gestisci l'upload dell'immagine
-    if ($request->hasFile('pic')) {
+      // Gestisci l'upload dell'immagine
+      if ($request->hasFile('pic')) {
         // Elimina l'immagine precedente se esiste
         if ($doctor->pic && Storage::disk('public')->exists('images/' . $doctor->pic)) {
             Storage::disk('public')->delete('images/' . $doctor->pic);
@@ -155,31 +168,20 @@ class DoctorController extends Controller
         $file = $request->file('pic');
         $filename = $file->store('images', 'public');
         $data['pic'] = basename($filename); // Salva solo il nome del file
-    } else {
+      } else {
         // Mantieni il nome del file esistente se nessuna nuova immagine è stata fornita
         $data['pic'] = $doctor->pic;
-    }
+      }
 
-    // Rimuovi `user_id` dai dati di aggiornamento, se non è necessario modificarlo
-    unset($data['user_id']);
+      // Rimuovi `user_id` dai dati di aggiornamento, se non è necessario modificarlo
+      unset($data['user_id']);
 
-    // Aggiorna i dati del medico
-    $doctor->update($data);
+      // Aggiorna i dati del medico
+      $doctor->update($data);
 
-     // Aggiorna le specializzazioni
-     $doctor->specializations()->sync($request->input('specializations'));
+      // Aggiorna le specializzazioni
+      $doctor->specializations()->sync($request->input('specializations'));
 
-    return redirect()->route('profile.show');
-}
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Doctor $doctor)
-    {
-        //
-    }
-
-    
+      return redirect()->route('profile.show');
+    }    
 }
