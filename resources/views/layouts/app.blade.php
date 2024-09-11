@@ -39,7 +39,7 @@
 
 		<!-- Contenuto della Pagina -->
 		<main>
-			<div class="container">
+			<div class="container-xl p-0">
 				@yield('content')
 			</div>
 		</main>
