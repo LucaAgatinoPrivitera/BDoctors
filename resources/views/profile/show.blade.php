@@ -32,19 +32,38 @@
                                 <p class="text-muted mt-4">Non ci sono specializzazioni specificate.</p>
                             @endif
 
-                            <!-- Sponsorizzazione attiva -->
-                            @if ($doctor->activeSponsorship())
-                                <div class="alert alert-info mt-4" role="alert">
-                                    <h5>Sponsorizzazione attiva</h5>
-                                    <p class="mb-1"><strong>Nome:</strong> {{ $doctor->activeSponsorship()->pivot->name }}</p>
-                                    <p class="mb-1"><strong>Prezzo:</strong> €{{ $doctor->activeSponsorship()->pivot->price }}</p>
-                                    <p class="mb-0"><strong>Data Inizio:</strong> {{ $doctor->activeSponsorship()->pivot->date_start }}</p>
-                                    <p class="mb-0"><strong>Data Fine:</strong> {{ $doctor->activeSponsorship()->pivot->date_end }}</p>
-                                </div>
-                            @else
-                                <p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
-                                <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Sponsorizza il Profilo</a>
+                              <!-- Sponsorizzazione attiva -->
+                            @if ($sponsorship = $doctor->activeSponsorship())
+                              @php
+                                
+                                $sponsorshipClass = ''; // Classe CSS per lo stile del pannellino
+                            
+                                // Cambia lo stile in base alla sponsorizzazione
+                                if ($sponsorship->pivot->sponsorship_id === 2) {
+                                    $sponsorshipClass = 'bg-secondary text-white'; // Colore platino
+                                } elseif ($sponsorship->pivot->sponsorship_id === 3) {
+                                    $sponsorshipClass = 'bg-warning text-dark'; // Colore oro
+                                } else {
+                                    $sponsorshipClass = 'bg-info text-white'; // Default per Basic
+                                }
+                              @endphp
+                            
+                             <div class="alert {{ $sponsorshipClass }} mt-4" role="alert">
+                                <h2>Sponsorizzazione attiva</h2>
+                                <p class="mb-1"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
+                                <p class="mb-1"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
+                                <p class="mb-0"><strong>Data Inizio:</strong> {{ $sponsorship->pivot->date_start }}</p>
+                                <p class="mb-0"><strong>Data Fine:</strong> {{ $sponsorship->pivot->date_end }}</p>
+                                @if ($sponsorship->pivot->name !== 'Gold') <!-- Se non è già Gold, mostra il pulsante di Upgrade -->
+                                    <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Upgrade Sponsorizzazione</a>
                             @endif
+                             </div>
+                            @else
+                            <p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
+                            <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Sponsorizza il Profilo</a>
+                            @endif
+                            
+
 
                             <!-- Curriculum Vitae -->
                             @if ($doctor->cv)

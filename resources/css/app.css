@@ -139,5 +139,16 @@
     width: 100wv;
 }
 
+.bg-secondary {
+    background-color: #b0b0b0 !important; /* Colore platino */
+}
+.bg-warning {
+    background-color: #ffd700 !important; /* Colore oro */
+}
+.bg-info {
+    background-color: #17a2b8 !important; /* Colore blu chiaro (Basic) */
+}
+
+
 
 

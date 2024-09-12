@@ -49,12 +49,27 @@ class Doctor extends Model
             ->withPivot('name', 'price', 'date_start', 'date_end');
     }
 
+
+    //   Commentata perchè devo testare un altra funzione diversa
+    // public function activeSponsorship()
+    // {
+    //     return $this->sponsorships()->where('date_start', '<=', now())
+    //         ->where('date_end', '>=', now())
+    //         ->first();
+    // }
+
+
+
     public function activeSponsorship()
-    {
-        return $this->sponsorships()->where('date_start', '<=', now())
-            ->where('date_end', '>=', now())
-            ->first();
-    }
+{
+    // Filtra le sponsorizzazioni attive e ordina per ID in modo decrescente
+    return $this->sponsorships()
+                ->wherePivot('date_start', '<=', now())
+                ->wherePivot('date_end', '>=', now())
+                ->orderBy('sponsorship_id', 'desc') 
+                ->first();
+}
+
 
     // per togliere i timestamps
     public $timestamps = false;
