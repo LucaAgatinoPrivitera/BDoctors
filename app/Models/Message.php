@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     // La tabella associata al modello
     protected $table = 'messages';

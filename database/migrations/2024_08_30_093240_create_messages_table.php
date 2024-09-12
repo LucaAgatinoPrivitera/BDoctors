@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('message');
             $table->string('email');
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

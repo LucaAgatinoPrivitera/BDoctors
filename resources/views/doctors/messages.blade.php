@@ -11,6 +11,7 @@
                     <li class="list-group-item message-item">
                         <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
                         <p class="mb-0">{{ $message->message }}</p>
+                        <p class="text-muted mb-0">{{ $message->created_at->format('d/m/Y H:i') }}</p>
                     </li>
                 @endforeach
             </ul>
