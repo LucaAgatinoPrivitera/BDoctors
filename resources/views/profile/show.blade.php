@@ -52,21 +52,6 @@
                             @endif
                             
 
-
-							<!-- Sponsorizzazione attiva -->
-							@if ($doctor->activeSponsorship())
-								<div class="alert alert-info mt-4" role="alert">
-									<h5>Sponsorizzazione attiva</h5>
-									<p class="mb-1"><strong>Nome:</strong> {{ $doctor->activeSponsorship()->pivot->name }}</p>
-									<p class="mb-1"><strong>Prezzo:</strong> €{{ $doctor->activeSponsorship()->pivot->price }}</p>
-									<p class="mb-0"><strong>Data Inizio:</strong> {{ $doctor->activeSponsorship()->pivot->date_start }}</p>
-									<p class="mb-0"><strong>Data Fine:</strong> {{ $doctor->activeSponsorship()->pivot->date_end }}</p>
-								</div>
-							@else
-								<p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
-								<a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3 p-3">Sponsorizza il Profilo</a>
-							@endif
-
 							<!-- Curriculum Vitae -->
 							@if ($doctor->cv)
 								<a href="{{ asset('storage/' . $doctor->cv) }}" class="btn btn-primary mt-3 p-3">Visualizza il CV</a>
