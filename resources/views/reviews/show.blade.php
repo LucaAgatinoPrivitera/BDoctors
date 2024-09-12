@@ -26,8 +26,8 @@
                 </li>
             </ul>
             <div class="text-center mt-4">
-                <a href="{{ route('reviews.index') }}" class="btn btn-primary">Torna alla lista</a>
-                <a href="{{ route('reviews.edit', $review->id) }}" class="btn btn-warning">Modifica</a>
+                <a href="{{ route('reviews.index') }}" class="btn btn-primary p-3">Torna alla lista</a>
+                <a href="{{ route('reviews.edit', $review->id) }}" class="btn btn-warning p-3">Modifica</a>
             </div>
         </div>
     </div>

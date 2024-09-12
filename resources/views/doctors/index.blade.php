@@ -134,7 +134,7 @@
 
 	@media (min-width: 1200px) {
 		.table {
-			font-size: 1.25rem;
+			font-size: 1rem;
 			/* Dimensione del font per schermi extra-large */
 		}
 
