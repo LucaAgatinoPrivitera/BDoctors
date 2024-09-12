@@ -48,7 +48,7 @@
         @endif
 
         <!-- Form di Creazione del Profilo -->
-        <form id="profileForm" method="POST" action="{{ route('profile.store') }}" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <form id="profileForm" method="POST" action="{{ route('doctors.store') }}" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

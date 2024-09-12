@@ -73,7 +73,7 @@ class DoctorController extends Controller
         'bio' => 'required|string|max:500',
         'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'cv' => 'nullable|file',
-        'specializations' => 'required|array|min:1',
+        'specializations' => 'nullable|array|min:1',
         'specializations.*' => 'integer|exists:specializations,id'
       ]);
 
@@ -94,11 +94,11 @@ class DoctorController extends Controller
       // Crea il dottore e salva le specializzazioni
       $doctor = Doctor::create($data);
 
-      // Associa le specializzazioni
-      $doctor->specializations()->sync($data['specializations']);
+      
+      // $doctor->specializations()->sync($data['specializations']);
 
-      // Rimuovi la specializzazione dalla sessione
-      $request->session()->forget('specialization');
+      
+      // $request->session()->forget('specialization');
 
       // Reindirizza alla pagina del profilo dottore usando lo slug
       return redirect()->route('profile.show');
