@@ -24,17 +24,18 @@
             <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autocomplete="address" />
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
-<!-- Specializzazione -->
-<div class="mt-4">
-    <x-input-label for="specialization" :value="__('Specializzazione')" />
-    <select id="specialization" name="specialization" class="block mt-1 w-full" required>
-        <option value="" disabled selected>{{ __('Seleziona una specializzazione') }}</option>
-        @foreach($specializations as $specialization)
-            <option value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-        @endforeach
-    </select>
-    <x-input-error :messages="$errors->get('specialization')" class="mt-2" />
-</div>
+        
+        <!-- Specializzazione -->
+        <div class="mt-4">
+            <x-input-label for="specialization" :value="__('Specializzazione')" />
+            <select id="specialization" name="specialization" class="block mt-1 w-full" required>
+                <option value="" disabled selected>{{ __('Seleziona una specializzazione') }}</option>
+                @foreach($specializations as $specialization)
+                    <option value="{{ $specialization->id }}">{{ $specialization->name }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('specialization')" class="mt-2" />
+        </div>
 
 
         <!-- Email -->

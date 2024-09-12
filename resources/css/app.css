@@ -188,6 +188,17 @@
     color: yellowgreen;
 }
 
+.backg{
+    background-image: url('https://img.freepik.com/vettori-gratuito/background-medico-dell-acquerello_52683-162142.jpg?t=st=1726149487~exp=1726153087~hmac=2609916cd8a4505f250af388d08ad0685cdf6c4d5f6ef8497ff0c6e08b581c26&w=1060'); /* URL dell'immagine */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+}
+
 
 
 
