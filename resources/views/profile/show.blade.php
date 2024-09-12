@@ -3,8 +3,8 @@
 @section('title', $doctor->user->name . ' ' . $doctor->surname)
 
 @section('content')
-    
-        <div class="container mt-5">
+    <div class="wrapper pt-3 pb-4">
+        <div class="container">
             <div class="card shadow-lg border-0 rounded-lg">
                 <div class="row g-0">
                     <!-- Sezione Foto del dottore -->
@@ -58,39 +58,49 @@
                 </div>
             </div>
         </div>
-
         <!-- Sezione Recensioni -->
         <div class="container mt-5">
-            <h3>Recensioni</h3>
+            <div class="d-flex justify-content-between align-items-center mb-3 ">
+                <h2 class="section-title">Ultime Recensioni Ricevute</h2>
+                <a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-all">Visualizza Tutte le Recensioni</a>
+            </div>
             @if($doctor->reviews->isNotEmpty())
-                <ul class="list-group">
-                    @foreach($doctor->reviews as $review)
-                        <li class="list-group-item">
-                            <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }}:</strong> {{ $review->review_text }}
-                            <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
-                        </li>
-                    @endforeach
-                </ul>
+            <ul class="list-group review-list">
+                @foreach($doctor->reviews->sortByDesc('created_at')->take(3) as $review)
+                    <li class="list-group-item review-item">
+                        <strong>{{ $review->name_reviewer ?: 'Utente sconosciuto' }} ({{ $review->email_reviewer }}):</strong>
+                        <p class="mb-0">{{ $review->review_text }}</p>
+                        <p class="text-muted mb-0">{{ $review->created_at->format('d/m/Y H:i') }}</p>
+                        <span class="badge bg-primary float-end">{{ $review->stars }} ★</span>
+                    </li>
+                @endforeach
+            </ul>
             @else
                 <p class="text-muted">Nessuna recensione ancora.</p>
             @endif
         </div>
-
+        
         <!-- Sezione Messaggi -->
         <div class="container mt-5">
-            <h3>Messaggi Ricevuti</h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title">Ultimi Messaggi Ricevuti</h2>
+                <a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-all">Visualizza Tutti i Messaggi</a>
+            </div>
             @if($doctor->messages->isNotEmpty())
-                <ul class="list-group">
-                    @foreach($doctor->messages as $message)
-                        <li class="list-group-item">
-                            <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
-                            <p class="mb-0">{{ $message->message }}</p>
-                        </li>
-                    @endforeach
-                </ul>
+            <ul class="list-group message-list">
+                @foreach($doctor->messages->sortByDesc('created_at')->take(3) as $message)
+                    <li class="list-group-item message-item">
+                        <strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
+                        <p class="mb-0">{{ $message->message }}</p>
+                        <p class="text-muted mb-0">{{ $message->created_at->format('d/m/Y H:i') }}</p>
+                    </li>
+                @endforeach
+            </ul>
             @else
                 <p class="text-muted">Nessun messaggio ricevuto.</p>
             @endif
         </div>
+    </div>   
 @endsection
+
 
