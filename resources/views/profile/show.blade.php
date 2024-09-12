@@ -48,29 +48,48 @@
                              </div>
                             @else
                             <p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
-                            <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Sponsorizza il Profilo</a>
+                            <a href="{{ route('sponsorships.create') }}" class="btn btn-sponsor mt-3">Sponsorizza il Profilo</a>
                             @endif
                             
 
 							<!-- Curriculum Vitae -->
 							@if ($doctor->cv)
-								<a href="{{ asset('storage/' . $doctor->cv) }}" class="btn btn-primary mt-3 p-3">Visualizza il CV</a>
+								<a href="{{ asset('storage/' . $doctor->cv) }}" class="btn btn-primary mt-3 p-2">Visualizza il CV</a>
 							@endif
 
 							<!-- Pulsante per modificare il profilo -->
-							<a href="{{ route('doctors.edit', $doctor->id) }}" class="btn btn-warning mt-3 ms-0 p-3">Modifica Profilo</a>
+							<a href="{{ route('doctors.edit', $doctor->id) }}" class="btn btn-warning mt-3 ms-0 p-2">Modifica Profilo</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+        <!-- Sezione Specializzazioni -->
+        <div class="container mt-5">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <div class="section-title bg-marble text-red">
+                        <h2>Specializzazioni</h2>
+                    </div>
+                    @if ($doctor->specializations->isNotEmpty())
+                        <ul class="list-group">
+                            @foreach ($doctor->specializations as $specialization)
+                                <li class="list-group-item">{{ $specialization->name }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-muted">Nessuna specializzazione aggiunta.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
 		<!-- Sezione Recensioni -->
 		<div class="container mt-5">
 			<div class="d-flex justify-content-between mb-3 gap-4">
 				<div class="d-flex gap-2 flex-md-row flex-column" style="align-items: flex-start">
 
 					<div class="d-block mb-4">
-						<h2 class="section-title p-2 btn mb-2">Ultime Recensioni Ricevute</h2>
+						<h2 class="section-title p-2  mb-2 bg-marble text-red">Ultime Recensioni Ricevute</h2>
 						@if ($doctor->reviews->isNotEmpty())
 							<ul class="list-group review-list">
 								@foreach ($doctor->reviews->sortByDesc('created_at')->take(3) as $review)
@@ -96,7 +115,7 @@
 				<div class="d-flex gap-2 flex-md-row flex-column" style="align-items: flex-start">
 
 					<div class="d-block mb-4">
-						<h2 class="section-title p-2 btn mb-2">Ultimi Messaggi Ricevuti</h2>
+						<h2 class="section-title p-2  mb-2 bg-marble text-red">Ultimi Messaggi Ricevuti</h2>
 						@if ($doctor->messages->isNotEmpty())
 							<ul class="list-group message-list">
 								@foreach ($doctor->messages->sortByDesc('created_at')->take(3) as $message)
@@ -117,36 +136,10 @@
 				</div>
 
 
-				{{-- <div>
-					<div class="d-xs-block d-md-flex justify-content-between mb-3 gap-2" style="align-items: flex-start">
-						<div>
-							<h2 class="section-title p-2 btn">Ultimi Messaggi Ricevuti</h2>
-							@if ($doctor->messages->isNotEmpty())
-								<ul class="list-group message-list">
-									@foreach ($doctor->messages->sortByDesc('created_at')->take(3) as $message)
-										<li class="list-group-item message-item">
-											<strong>Da: {{ $message->name }} ({{ $message->email }})</strong>
-											<p class="mb-0">{{ $message->message }}</p>
-											<p class="text-muted mb-0">{{ $message->created_at->format('d/m/Y H:i') }}</p>
-										</li>
-									@endforeach
-								</ul>
-							@else
-								<p class="text-muted">Nessun messaggio ricevuto.</p>
-							@endif
-						</div>
-
-						<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-all p-2">Visualizza Tutti i
-							Messaggi</a>
-					</div>
-
-				</div> --}}
 
 			</div>
 		</div>
 
 	</div>
-
-	<!-- Sezione Messaggi -->
 
 @endsection

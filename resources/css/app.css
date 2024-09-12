@@ -118,11 +118,11 @@
     border-radius: 5px;
     border: none;
     transition: background 0.3s ease, transform 0.2s ease;
-    background: linear-gradient(90deg, rgba(0,255,191,1) 0%, rgba(0,212,255,1) 100%); /* Gradiente verde chiaro a blu chiaro */
+    background: linear-gradient(90deg, rgba(0,255,191,1) 0%, rgba(0,212,255,1) 100%); 
 }
 
 .btn-view-all:hover {
-    background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(0,255,191,1) 100%); /* Gradiente inverso per hover */
+    background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(0,255,191,1) 100%); 
     transform: scale(1.05);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
@@ -140,14 +140,54 @@
 }
 
 .bg-secondary {
-    background-color: #b0b0b0 !important; /* Colore platino */
+    background-color: #b0b0b0 !important; 
 }
 .bg-warning {
-    background-color: #ffd700 !important; /* Colore oro */
+    background-color: #ffd700 !important; 
 }
 .bg-info {
-    background-color: #17a2b8 !important; /* Colore blu chiaro (Basic) */
+    background-color: #17a2b8 !important; 
 }
+
+
+.bg-marble {
+    background: linear-gradient(45deg, #f9f9f9, #e0e0e0);
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.text-red {
+    color: #d32f2f; 
+    font-weight: bold;
+}
+
+.list-group-item {
+    font-size: 16px;
+    border: none;
+    padding: 15px 20px;
+    background-color: #ffffff; 
+    margin-bottom: 5px;
+}
+
+/* Pulsante Sponsorizza Profilo */
+.btn-sponsor {
+    background-color: #c8102e; 
+    color: #f9f9f9; 
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: inline-block; 
+}
+
+.btn-sponsor:hover {
+    background-color: #a30824; 
+    color: yellowgreen;
+}
+
 
 
 

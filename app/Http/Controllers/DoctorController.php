@@ -71,10 +71,8 @@ class DoctorController extends Controller
         'address' => 'required|string|min:5|max:100',
         'phone' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
         'bio' => 'required|string|max:500',
-        'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'cv' => 'nullable|file',
-        'specializations' => 'nullable|array|min:1',
-        'specializations.*' => 'integer|exists:specializations,id'
+        'pic' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        'cv' => 'required|mimes:pdf,doc,docx|max:2048',
       ]);
 
       // Ottieni l'ID dell'utente autenticato
@@ -95,10 +93,12 @@ class DoctorController extends Controller
       $doctor = Doctor::create($data);
 
       
-      // $doctor->specializations()->sync($data['specializations']);
-
-      
-      // $request->session()->forget('specialization');
+      // Recupera la specializzazione dalla sessione
+       $specializationId = $request->session()->get('specialization');
+         if ($specializationId) {
+           $doctor->specializations()->sync([$specializationId]);
+           $request->session()->forget('specialization');
+         }
 
       // Reindirizza alla pagina del profilo dottore usando lo slug
       return redirect()->route('profile.show');
