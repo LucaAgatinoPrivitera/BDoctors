@@ -119,5 +119,50 @@ class ReviewSeeder extends Seeder
         foreach ($doctors as $index => $doctor) {
             Review::create(array_merge($reviews[$index], ['doctor_id' => $doctor->id]));
         }
+
+        // Aggiungi 6 recensioni extra per il medico con doctor_id 1
+        $extraReviews = [
+            [
+                'stars' => 5,
+                'review_text' => 'Ottimo dottore, molto consigliato!',
+                'name_reviewer' => 'Claudia Rossi',
+                'email_reviewer' => 'claudia.rossi@example.com',
+            ],
+            [
+                'stars' => 4,
+                'review_text' => 'Molto professionale e cortese.',
+                'name_reviewer' => 'Paolo Bianchi',
+                'email_reviewer' => 'paolo.bianchi@example.com',
+            ],
+            [
+                'stars' => 5,
+                'review_text' => 'Sempre disponibile e preparato.',
+                'name_reviewer' => 'Marta Verdi',
+                'email_reviewer' => 'marta.verdi@example.com',
+            ],
+            [
+                'stars' => 4,
+                'review_text' => 'Un ottimo medico, lo raccomando a tutti.',
+                'name_reviewer' => 'Luigi Neri',
+                'email_reviewer' => 'luigi.neri@example.com',
+            ],
+            [
+                'stars' => 5,
+                'review_text' => 'Molto competente e attento alle esigenze dei pazienti.',
+                'name_reviewer' => 'Silvia Gialli',
+                'email_reviewer' => 'silvia.gialli@example.com',
+            ],
+            [
+                'stars' => 3,
+                'review_text' => 'Esperienza positiva, anche se l\'attesa è stata lunga.',
+                'name_reviewer' => 'Riccardo Viola',
+                'email_reviewer' => 'riccardo.viola@example.com',
+            ],
+        ];
+
+        // Inserisci le recensioni extra per il medico con doctor_id = 1
+        foreach ($extraReviews as $review) {
+            Review::create(array_merge($review, ['doctor_id' => 1]));
+        }
     }
 }
