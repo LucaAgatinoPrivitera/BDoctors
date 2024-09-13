@@ -141,7 +141,56 @@ class MessagesSeeder extends Seeder
                 'name' => 'Olivia Wilson',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            // 6 nuovi messaggi per doctor_id 1
+            [
+                'doctor_id' => 1,
+                'message' => 'Mi è stata molto utile la tua consulenza, grazie ancora.',
+                'email' => 'carl.murphy@example.com',
+                'name' => 'Carl Murphy',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'doctor_id' => 1,
+                'message' => 'Vorrei fissare un appuntamento per un controllo di routine.',
+                'email' => 'danielle.foster@example.com',
+                'name' => 'Danielle Foster',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'doctor_id' => 1,
+                'message' => 'Ho delle domande riguardo alla mia ultima diagnosi.',
+                'email' => 'emily.morris@example.com',
+                'name' => 'Emily Morris',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'doctor_id' => 1,
+                'message' => 'Potresti consigliarmi uno specialista per il mio problema?',
+                'email' => 'frank.turner@example.com',
+                'name' => 'Frank Turner',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'doctor_id' => 1,
+                'message' => 'La tua risposta è stata molto utile, grazie mille!',
+                'email' => 'gina.williams@example.com',
+                'name' => 'Gina Williams',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'doctor_id' => 1,
+                'message' => 'Posso ricevere una copia dei risultati della mia ultima visita?',
+                'email' => 'harry.jameson@example.com',
+                'name' => 'Harry Jameson',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
