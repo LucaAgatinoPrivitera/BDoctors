@@ -53,6 +53,26 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+
+                 <!-- Cognome del dottore -->
+                 <div>
+                    <label for="surname" class="form-label block text-gray-700 font-semibold mb-2">Cognome</label>
+                    <input type="text" id="surname" name="surname" class="form-control block w-full px-4 py-2 border rounded-md" value="{{ old('surname') }}" required>
+                    @error('surname')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
+                    <!-- Indirizzo del dottore -->
+                    <div class="col-span-2">
+                        <label for="address" class="form-label block text-gray-700 font-semibold mb-2">Indirizzo</label>
+                        <input type="text" id="address" name="address" class="form-control block w-full px-4 py-2 border rounded-md" value="{{ old('address') }}" required>
+                        @error('address')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                 <!-- Telefono del dottore -->
                 <div class="col-span-2">
                     <label for="phone" class="form-label block text-gray-700 font-semibold mb-2">Telefono</label>
