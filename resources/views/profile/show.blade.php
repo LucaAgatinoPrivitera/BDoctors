@@ -10,7 +10,7 @@
 					<!-- Sezione Foto del dottore -->
 					<div class="col-md-4 bg-light rounded-start">
 						<img src="{{ asset('storage/images/' . $doctor->pic) }}"
-							alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}" class="img-fluid rounded-circle p-4">
+							alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}" class="img-fluid rounded-circle p-4 h-100 w-100 object-fit-cover">
 					</div>
 					<!-- Sezione Informazioni del dottore -->
 					<div class="col-md-8">
