@@ -20,41 +20,44 @@
 							<p class="card-text text-muted">Telefono: {{ $doctor->phone }}</p>
 							<p class="card-text mt-4">{{ $doctor->bio }}</p>
 
-                              <!-- Sponsorizzazione attiva -->
-                            @if ($sponsorship = $doctor->activeSponsorship())
-                              @php
-                                
-                                $sponsorshipClass = ''; // Classe CSS per lo stile del pannellino
-                            
-                                // Cambia lo stile in base alla sponsorizzazione
-                                if ($sponsorship->pivot->sponsorship_id === 2) {
-                                    $sponsorshipClass = 'bg-secondary text-white'; // Colore platino
-                                } elseif ($sponsorship->pivot->sponsorship_id === 3) {
-                                    $sponsorshipClass = 'bg-warning text-dark'; // Colore oro
-                                } else {
-                                    $sponsorshipClass = 'bg-info text-white'; // Default per Basic
-                                }
-                              @endphp
-                            
-                             <div class="alert {{ $sponsorshipClass }} mt-4" role="alert">
-                                <h2>Sponsorizzazione attiva</h2>
-                                <p class="mb-1"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
-                                <p class="mb-1"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
-                                <p class="mb-0"><strong>Data Inizio:</strong> {{ $sponsorship->pivot->date_start }}</p>
-                                <p class="mb-0"><strong>Data Fine:</strong> {{ $sponsorship->pivot->date_end }}</p>
-                                @if ($sponsorship->pivot->name !== 'Gold') <!-- Se non è già Gold, mostra il pulsante di Upgrade -->
-                                    <a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Upgrade Sponsorizzazione</a>
-                            @endif
-                             </div>
-                            @else
-                            <p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
-                            <a href="{{ route('sponsorships.create') }}" class="btn btn-sponsor mt-3">Sponsorizza il Profilo</a>
-                            @endif
-                            
+							<!-- Sponsorizzazione attiva -->
+							@if ($sponsorship = $doctor->activeSponsorship())
+								@php
+
+									$sponsorshipClass = ''; // Classe CSS per lo stile del pannellino
+
+									// Cambia lo stile in base alla sponsorizzazione
+									if ($sponsorship->pivot->sponsorship_id === 2) {
+									    $sponsorshipClass = 'bg-secondary text-white'; // Colore platino
+									} elseif ($sponsorship->pivot->sponsorship_id === 3) {
+									    $sponsorshipClass = 'bg-warning text-dark'; // Colore oro
+									} else {
+									    $sponsorshipClass = 'bg-info text-white'; // Default per Basic
+									}
+								@endphp
+
+								<div class="alert {{ $sponsorshipClass }} mt-4" role="alert">
+									<h2>Sponsorizzazione attiva</h2>
+									<p class="mb-1"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
+									<p class="mb-1"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
+									<p class="mb-0"><strong>Data Inizio:</strong> {{ $sponsorship->pivot->date_start }}</p>
+									<p class="mb-0"><strong>Data Fine:</strong> {{ $sponsorship->pivot->date_end }}</p>
+									@if ($sponsorship->pivot->name !== 'Gold')
+										<!-- Se non è già Gold, mostra il pulsante di Upgrade -->
+										<a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Upgrade Sponsorizzazione</a>
+									@endif
+								</div>
+							@else
+								<p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
+								<a href="{{ route('sponsorships.create') }}" class="btn btn-sponsor mt-3">Sponsorizza il Profilo</a>
+							@endif
+
 
 							<!-- Curriculum Vitae -->
 							@if ($doctor->cv)
-								<a href="{{ asset('storage/' . $doctor->cv) }}" class="btn btn-primary mt-3 p-2">Visualizza il CV</a>
+								<a href="{{ asset('storage/cvs/' . $doctor->cv) }}" target="_blank" class="btn btn-primary mt-3 p-2">
+									Visualizza CV
+								</a>
 							@endif
 
 							<!-- Pulsante per modificare il profilo -->
@@ -64,25 +67,25 @@
 				</div>
 			</div>
 		</div>
-        <!-- Sezione Specializzazioni -->
-        <div class="container mt-5">
-            <div class="card shadow-lg border-0 rounded-lg">
-                <div class="card-body">
-                    <div class="section-title bg-marble text-red">
-                        <h2>Specializzazioni</h2>
-                    </div>
-                    @if ($doctor->specializations->isNotEmpty())
-                        <ul class="list-group">
-                            @foreach ($doctor->specializations as $specialization)
-                                <li class="list-group-item">{{ $specialization->name }}</li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-muted">Nessuna specializzazione aggiunta.</p>
-                    @endif
-                </div>
-            </div>
-        </div>
+		<!-- Sezione Specializzazioni -->
+		<div class="container mt-5">
+			<div class="card shadow-lg border-0 rounded-lg">
+				<div class="card-body">
+					<div class="section-title bg-marble text-red">
+						<h2>Specializzazioni</h2>
+					</div>
+					@if ($doctor->specializations->isNotEmpty())
+						<ul class="list-group">
+							@foreach ($doctor->specializations as $specialization)
+								<li class="list-group-item">{{ $specialization->name }}</li>
+							@endforeach
+						</ul>
+					@else
+						<p class="text-muted">Nessuna specializzazione aggiunta.</p>
+					@endif
+				</div>
+			</div>
+		</div>
 		<!-- Sezione Recensioni -->
 		<div class="container mt-5">
 			<div class="d-flex justify-content-between mb-3 gap-4">
