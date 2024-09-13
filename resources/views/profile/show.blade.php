@@ -10,7 +10,8 @@
 					<!-- Sezione Foto del dottore -->
 					<div class="col-md-4 bg-light rounded-start">
 						<img src="{{ asset('storage/images/' . $doctor->pic) }}"
-							alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}" class="img-fluid rounded-circle p-4 h-100 w-100 object-fit-cover">
+							alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}"
+							class="img-fluid rounded-circle p-4 h-100 w-100 object-fit-cover">
 					</div>
 					<!-- Sezione Informazioni del dottore -->
 					<div class="col-md-8">
@@ -40,8 +41,10 @@
 									<h2>Sponsorizzazione attiva</h2>
 									<p class="mb-1"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
 									<p class="mb-1"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
-									<p class="mb-0"><strong>Data Inizio:</strong> {{ $sponsorship->pivot->date_start }}</p>
-									<p class="mb-0"><strong>Data Fine:</strong> {{ $sponsorship->pivot->date_end }}</p>
+									<p class="mb-0"><strong>Data Inizio:</strong>
+										{{ \Carbon\Carbon::parse($sponsorship->pivot->date_start)->format('d/m/Y H:i') }}</p>
+									<p class="mb-0"><strong>Data Fine:</strong>
+										{{ \Carbon\Carbon::parse($sponsorship->pivot->date_end)->format('d/m/Y H:i') }}</p>
 									@if ($sponsorship->pivot->name !== 'Gold')
 										<!-- Se non è già Gold, mostra il pulsante di Upgrade -->
 										<a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Upgrade Sponsorizzazione</a>

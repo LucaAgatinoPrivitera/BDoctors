@@ -77,8 +77,10 @@ class DoctorController extends Controller
      */
     public function show($slug)
     {
-        // Recupera un medico specifico dal database con lo slug fornito, includendo le recensioni
-        $doctor = Doctor::with(['user', 'specializations', 'reviews'])->where('slug', $slug)->first();
+        // Recupera un medico specifico dal database con lo slug fornito
+        $doctor = Doctor::with(['user', 'specializations', 'reviews' => function ($query) {
+            $query->orderBy('created_at', 'desc'); // Ordina le recensioni per data di creazione in ordine decrescente
+        }])->where('slug', $slug)->first();
 
         if ($doctor) {
             return response()->json($doctor);
@@ -86,6 +88,7 @@ class DoctorController extends Controller
             return response()->json(['error' => 'Dottore non trovato'], 404);
         }
     }
+
 
 
     /*public function getDoctors(Request $request)
