@@ -3,9 +3,9 @@
 @section('title', $doctor->user->name . ' ' . $doctor->surname)
 
 @section('content')
-	<div class="wrapper pt-3 pb-4">
+	<div class="wrapper  pt-3 pb-4">
 		<div class="container">
-			<div class="card shadow-lg border-0 rounded-lg">
+			<div class="card shadow-lg border-0 rounded-lg uiverse-bg">
 				<div class="row g-0">
 					<!-- Sezione Foto del dottore -->
 					<div class="col-md-4 bg-light rounded-start">
@@ -15,10 +15,10 @@
 					<!-- Sezione Informazioni del dottore -->
 					<div class="col-md-8">
 						<div class="card-body">
-							<h2 class="card-title">{{ $doctor->user->name }} {{ $doctor->surname }}</h2>
-							<p class="card-text text-muted mb-4">Indirizzo: {{ $doctor->address }}</p>
-							<p class="card-text text-muted">Telefono: {{ $doctor->phone }}</p>
-							<p class="card-text mt-4">{{ $doctor->bio }}</p>
+							<h2 class="card-title doctor-name mb-4">{{ $doctor->user->name }} {{ $doctor->surname }}</h2>
+							<p class="card-text doctor-info mb-4">Indirizzo: {{ $doctor->address }}</p>
+							<p class="card-text doctor-info">Telefono: {{ $doctor->phone }}</p>
+							<p class="card-text mt-4 doctor-info">{{ $doctor->bio }}</p>
 
 							<!-- Sponsorizzazione attiva -->
 							@if ($sponsorship = $doctor->activeSponsorship())
@@ -44,12 +44,25 @@
 									<p class="mb-0"><strong>Data Fine:</strong> {{ $sponsorship->pivot->date_end }}</p>
 									@if ($sponsorship->pivot->name !== 'Gold')
 										<!-- Se non è già Gold, mostra il pulsante di Upgrade -->
-										<a href="{{ route('sponsorships.create') }}" class="btn btn-success mt-3">Upgrade Sponsorizzazione</a>
+										<p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
+								<button class="button">
+								  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
+									<path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
+								  </svg>
+								  <a href="{{ route('sponsorships.create') }}">Upgrade</a>
+								</button>
+										
 									@endif
 								</div>
 							@else
-								<p class="text-muted mt-4">Nessuna sponsorizzazione attiva.</p>
-								<a href="{{ route('sponsorships.create') }}" class="btn btn-sponsor mt-3">Sponsorizza il Profilo</a>
+								<p class="text mt-4">Nessuna sponsorizzazione attiva.</p>
+								<button class="button">
+								  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
+									<path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
+								  </svg>
+								  <a href="{{ route('sponsorships.create') }}">Sponsorizza il Profilo</a>
+								</button>
+								
 							@endif
 
 
@@ -69,7 +82,7 @@
 		</div>
 		<!-- Sezione Specializzazioni -->
 		<div class="container mt-5">
-			<div class="card shadow-lg border-0 rounded-lg">
+			<div class="card shadow-lg border-0 rounded-lg uiverse-bg">
 				<div class="card-body">
 					<div class="section-title bg-marble text-red">
 						<h2>Specializzazioni</h2>
@@ -87,8 +100,8 @@
 			</div>
 		</div>
 		<!-- Sezione Recensioni -->
-		<div class="container mt-5">
-			<div class="d-flex justify-content-between mb-3 gap-4">
+		<div class="container mt-5  rounded-lg border-0">
+			<div class="d-flex justify-content-between mb-3 gap-4 uiverse-bg rounded-lg p-3">
 				<div class="d-flex gap-2 flex-md-row flex-column" style="align-items: flex-start">
 
 					<div class="d-block mb-4">
@@ -109,7 +122,7 @@
 						@endif
 					</div>
 
-					<a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-all p-2">Visualizza Tutte le
+					<a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutte le
 						Recensioni</a>
 				</div>
 
@@ -134,12 +147,9 @@
 						@endif
 					</div>
 
-					<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-all p-2">Visualizza Tutti i
+					<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutti i
 						Messaggi</a>
 				</div>
-
-
-
 			</div>
 		</div>
 

@@ -37,7 +37,7 @@
         <div class="row">
             @foreach ($sponsorships as $sponsorship)
                 <div class="col-md-4 mb-4">
-                    <div class="card border-1 {{ $sponsorship->name === 'Gold' ? 'bg-warning text-white' : ($sponsorship->name === 'Premium' ? 'bg-secondary text-white' : 'bg-light') }}">
+                    <div class="card border-1 {{ $sponsorship->name === 'Gold' ? 'bg-warning text-black' : ($sponsorship->name === 'Premium' ? 'bg-secondary text-black' : 'bg-light') }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $sponsorship->name }}</h5>
                             <p class="card-text">
