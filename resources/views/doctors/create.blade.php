@@ -55,7 +55,7 @@
 
 
                  <!-- Cognome del dottore -->
-                 <div>
+                 <div class="col-span-2">
                     <label for="surname" class="form-label block text-gray-700 font-semibold mb-2">Cognome</label>
                     <input type="text" id="surname" name="surname" class="form-control block w-full px-4 py-2 border rounded-md" value="{{ old('surname') }}" required>
                     @error('surname')
