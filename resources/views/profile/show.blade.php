@@ -38,12 +38,12 @@
 								@endphp
 
 								<div class="alert {{ $sponsorshipClass }} mt-4" role="alert">
-									<h2>Sponsorizzazione attiva</h2>
-									<p class="mb-1"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
-									<p class="mb-1"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
-									<p class="mb-0"><strong>Data Inizio:</strong>
+									<h2 class=" text-dark">Sponsorizzazione attiva</h2>
+									<p class="mb-1 text-dark"><strong>Nome:</strong> {{ $sponsorship->pivot->name }}</p>
+									<p class="mb-1 text-dark"><strong>Prezzo:</strong> €{{ $sponsorship->pivot->price }}</p>
+									<p class="mb-0 text-dark"><strong>Data Inizio:</strong>
 										{{ \Carbon\Carbon::parse($sponsorship->pivot->date_start)->format('d/m/Y H:i') }}</p>
-									<p class="mb-0"><strong>Data Fine:</strong>
+									<p class="mb-0 text-dark"><strong>Data Fine:</strong>
 										{{ \Carbon\Carbon::parse($sponsorship->pivot->date_end)->format('d/m/Y H:i') }}</p>
 									@if ($sponsorship->pivot->name !== 'Gold')
 										<!-- Se non è già Gold, mostra il pulsante di Upgrade -->
@@ -120,7 +120,7 @@
 								@endforeach
 							</ul>
 						@else
-							<p class="text-muted">Nessuna recensione ricevuta.</p>
+							<p class="text-muted text-dark">Nessuna recensione ricevuta.</p>
 						@endif
 						<a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutte le
 							Recensioni</a>
@@ -146,7 +146,7 @@
 								@endforeach
 							</ul>
 						@else
-							<p class="text-muted">Nessun messaggio ricevuto.</p>
+							<p class="text-muted text-dark">Nessun messaggio ricevuto.</p>
 						@endif
 						<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutti i
 							Messaggi</a>
