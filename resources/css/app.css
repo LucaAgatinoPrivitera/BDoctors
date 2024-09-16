@@ -276,7 +276,7 @@
     background-color: white;
 }
 
-@media (max-width: 660px) {
+@media (max-width: 768px) {
     .d-flex {
       flex-direction: column !important; /* Cambia la direzione del flex in colonna */
     }

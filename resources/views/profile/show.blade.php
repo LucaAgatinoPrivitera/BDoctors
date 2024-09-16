@@ -5,13 +5,13 @@
 @section('content')
 	<div class="wrapper  pt-3 pb-4">
 		<div class="container">
-			<div class="card shadow-lg border-0 rounded-lg uiverse-bg">
+			<div class="card shadow-lg border-0  uiverse-bg">
 				<div class="row g-0">
 					<!-- Sezione Foto del dottore -->
 					<div class="col-md-4 bg-light rounded-start">
 						<img src="{{ asset('storage/images/' . $doctor->pic) }}"
 							alt="Foto di {{ $doctor->user->name }} {{ $doctor->surname }}"
-							class="img-fluid rounded-circle p-4 h-100 w-100 object-fit-cover">
+							class="img-fluid  p-4 h-100 w-100 object-fit-cover">
 					</div>
 					<!-- Sezione Informazioni del dottore -->
 					<div class="col-md-8">
@@ -58,7 +58,6 @@
 									@endif
 								</div>
 							@else
-								<p class="text mt-4">Nessuna sponsorizzazione attiva.</p>
 								<button class="button">
 								  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 24">
 									<path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path>
