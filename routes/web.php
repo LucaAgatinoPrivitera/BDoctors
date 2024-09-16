@@ -27,11 +27,11 @@ Route::get('/guest/doctor/{id}', function ($id) {
 
 
 //Dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::get('doctors', [DoctorController::class, 'index'])->name('doctors.index');
 
 
 
@@ -48,19 +48,19 @@ Route::middleware('auth')->group(function () {
     Route::resource('messages', MessageController::class);
     Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 
-   
-    
+
+
     Route::get('payment', [BraintreeController::class, 'showPaymentForm'])->name('payment.form');
     Route::post('payment', [BraintreeController::class, 'handlePayment'])->name('payment.handle');
     Route::get('payment/success', function () {
-      return view('payment-success');
+        return view('payment-success');
     })->name('payment.success');
 
     // Rotta per visualizzare tutte le recensioni di un medico
     Route::get('doctors/{doctor}/reviews', [DoctorController::class, 'showReviews'])->name('doctors.reviews');
     // Rotta per visualizzare tutti i messaggi di un medico
     Route::get('doctors/{doctor}/messages', [DoctorController::class, 'showMessages'])->name('doctors.messages');
-    
+
 
 
     // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -74,6 +74,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-
-
