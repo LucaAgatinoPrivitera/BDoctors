@@ -10,61 +10,63 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\BraintreeController;
 
-
 // Modifica la rotta principale per reindirizzare alla pagina di registrazione
 Route::get('/', function () {
     return redirect()->route('register');
 })->name('home');
 
-// rotta show del guest
+// Rotta show del guest per visualizzare un singolo dottore
 Route::get('/guest/doctor/{id}', function ($id) {
-    // Recupera il dottore specifico dal database
+    // Recupera il dottore specifico dal database con le relazioni necessarie
     $doctor = Doctor::with('user')->findOrFail($id);
 
     // Passa i dati alla vista
     return view('guest.doctor.show', ['doctor' => $doctor]);
 })->name('guest.doctor.show');
 
+// Rotta per la dashboard, protetta dall'autenticazione e verifica email
+Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
-//Dashboard
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
+// Rotta per visualizzare tutti i dottori
 Route::get('doctors', [DoctorController::class, 'index'])->name('doctors.index');
 
-
-
-//Autenticato, rotte dei dottori, reviews, profili e sponsor
+// Gruppo di rotte protette da autenticazione (richiedono login)
 Route::middleware('auth')->group(function () {
-    // Route::resource('doctors', DoctorController::class);
-    Route::resource('doctors', DoctorController::class);
-    // Aggiungi questa route per gestire lo show con lo slug
+
+    // Rotte per la gestione dei dottori
+    Route::resource('doctors', DoctorController::class)->except(['show']);
+    
+    // Rotta specifica per visualizzare un dottore tramite lo slug
     Route::get('doctors/{doctor:slug}', [DoctorController::class, 'show'])->name('doctors.show');
 
+    // Rotte per le recensioni dei dottori
     Route::resource('reviews', ReviewController::class);
+    
+    // Rotte per le sponsorizzazioni
     Route::resource('sponsorships', SponsorshipController::class);
+    
+    // Rotte per le specializzazioni
     Route::resource('specializations', SpecializationController::class);
+    
+    // Rotte per i messaggi
     Route::resource('messages', MessageController::class);
-    Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
 
+    // Rotta per visualizzare tutte le recensioni di un dottore specifico
+    Route::get('doctors/{doctor}/reviews', [DoctorController::class, 'showReviews'])->name('doctors.reviews');
+    
+    // Rotta per visualizzare tutti i messaggi di un dottore specifico
+    Route::get('doctors/{doctor}/messages', [DoctorController::class, 'showMessages'])->name('doctors.messages');
 
-
+    // Rotte per la gestione del pagamento tramite Braintree
     Route::get('payment', [BraintreeController::class, 'showPaymentForm'])->name('payment.form');
     Route::post('payment', [BraintreeController::class, 'handlePayment'])->name('payment.handle');
     Route::get('payment/success', function () {
         return view('payment-success');
     })->name('payment.success');
 
-    // Rotta per visualizzare tutte le recensioni di un medico
-    Route::get('doctors/{doctor}/reviews', [DoctorController::class, 'showReviews'])->name('doctors.reviews');
-    // Rotta per visualizzare tutti i messaggi di un medico
-    Route::get('doctors/{doctor}/messages', [DoctorController::class, 'showMessages'])->name('doctors.messages');
-
-
-
-    // Route::get('admin/doctors', [DoctorController::class, 'index'])->name('doctors.index');
-    // Route::resource('admin/doctors', DoctorController::class);
+    // Rotte per la gestione del profilo utente
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -73,4 +75,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Inclusione delle rotte di autenticazione generate da Laravel
 require __DIR__ . '/auth.php';
