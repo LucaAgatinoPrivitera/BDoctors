@@ -123,10 +123,11 @@
 						@else
 							<p class="text-muted">Nessuna recensione ricevuta.</p>
 						@endif
+						<a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutte le
+							Recensioni</a>
 					</div>
 
-					<a href="{{ route('doctors.reviews', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutte le
-						Recensioni</a>
+					
 				</div>
 
 
@@ -148,10 +149,11 @@
 						@else
 							<p class="text-muted">Nessun messaggio ricevuto.</p>
 						@endif
+						<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutti i
+							Messaggi</a>
 					</div>
 
-					<a href="{{ route('doctors.messages', $doctor->id) }}" class="btn btn-view-reviews">Visualizza Tutti i
-						Messaggi</a>
+					
 				</div>
 			</div>
 		</div>

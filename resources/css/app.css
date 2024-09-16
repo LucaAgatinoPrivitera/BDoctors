@@ -114,7 +114,7 @@
 
 /* Pulsante per visualizzare tutte le recensioni */
 .btn-view-reviews {
-    display: inline-block;
+    display: flex;
     color: #fff;
     font-size: 15px;
     width: 17rem;
@@ -275,5 +275,16 @@
     border-radius: 10px;
     background-color: white;
 }
+
+@media (max-width: 660px) {
+    .d-flex {
+      flex-direction: column !important; /* Cambia la direzione del flex in colonna */
+    }
+  
+    .gap-2 {
+      gap: 1rem; /* Aumenta il gap tra i due blocchi, se necessario */
+    }
+  }
+  
 
   
