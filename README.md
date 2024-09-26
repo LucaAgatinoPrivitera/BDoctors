@@ -19,7 +19,7 @@ Vengono visualizzati solamente gli ultimi 3 messaggi e le ultime 3 recensioni, m
 Messaggi e recensioni mostrano nome utente, email e contenuto del messaggio o della recensione, e data. Sono ordinati dal più recente al meno recente.
 
 # Progettazione #
-Il sito è stato realizzato utilizzando Laravel, utilizzando Bootstrap e CSS plain per realizzare lo stile del sito.
+Il sito è stato realizzato utilizzando Laravel, e Bootstrap insieme al CSS plain per realizzare lo stile del sito.
 Il sito non rappresenta solamente il back-office, ma rappresenta anche l'API sulla quale si agganciera il front-office.
 Il caricamento delle immagini è stato ottimizzato, per fare in modo che nel momento in cui un dottore aggiorni la propria immagine, la vecchia immagine venga cancellata.
 Tutto il sito è validato sia lato Back-end, sia Front-end.
